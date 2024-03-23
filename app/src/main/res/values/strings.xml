@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Մատյան</string>
+    <string name="title_classes">Դասարաններ </string>
+    <string name="title_class_list">Դասացուցակ </string>
+    <string name="title_notes">Նշումներ</string>
+    <string name="title_settings">Կարգավորումներ</string>
+</resources>
