@@ -12,14 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.varda.table.R;
 import com.varda.table.activity.TableActivity;
+import com.varda.table.model.Classes;
 
 import java.util.List;
 
 public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.ViewHolder> {
 
-    private List<String> classesList;
+    private List<Classes> classesList;
 
-    public ClassesAdapter(List<String> classesList) {
+    public ClassesAdapter(List<Classes> classesList) {
         this.classesList = classesList;
     }
 
@@ -32,7 +33,7 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String className = classesList.get(position);
+        String className = classesList.get(position).getClassName();
         holder.classesItemText.setText(className);
 
         holder.itemView.setOnClickListener(view -> {
@@ -50,11 +51,14 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.ViewHold
         return classesList.size();
     }
 
-    public void setClasses(List<String> classes) {
-        classesList.clear();
-        classesList.addAll(classes);
+    public void setClasses(List<Classes> classes) {
+        if (classes == null) {
+            return;
+        }
+        classesList = classes;
         notifyDataSetChanged();
     }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView classesItemText;
@@ -65,4 +69,3 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.ViewHold
         }
     }
 }
-

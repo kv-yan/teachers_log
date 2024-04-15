@@ -1,6 +1,7 @@
 package com.varda.table.ui.classes;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,29 +13,64 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.varda.table.adapter.ClassesAdapter;
 import com.varda.table.databinding.FragmentClassesBinding;
+import com.varda.table.dialog.AddNewClassDialogHelper;
+import com.varda.table.factory.ClassesViewModelFactory;
+import com.varda.table.model.Classes;
 
-import java.util.ArrayList;
+import java.util.Collections;
 
 public class FragmentClasses extends Fragment {
 
     private FragmentClassesBinding binding;
     private ClassesViewModel classesViewModel;
-    private ClassesAdapter adapter;
+    private ClassesAdapter classesAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentClassesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        classesViewModel = new ViewModelProvider(this).get(ClassesViewModel.class);
+        ClassesViewModelFactory factory = new ClassesViewModelFactory(requireActivity().getApplication());
+        classesViewModel = new ViewModelProvider(this, factory).get(ClassesViewModel.class);
+        classesAdapter = new ClassesAdapter(Collections.emptyList());
 
-        adapter = new ClassesAdapter(new ArrayList<>());
-        binding.rvClasses.setAdapter(adapter);
-        binding.rvClasses.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        classesViewModel.getClasses().observe(getViewLifecycleOwner(), classes -> {
-            adapter.setClasses(classes);
+        classesViewModel.getAllClasses().observe(getViewLifecycleOwner(), classes -> {
+            // Update the RecyclerView adapter with the new data
+            classesAdapter.setClasses(classes);
         });
 
+        binding.addNewClass.setOnClickListener(v -> AddNewClassDialogHelper.showAddClassDialog(requireContext(), new AddNewClassDialogHelper.DialogCallback() {
+            @Override
+            public void onSave(String inputText) {
+                Classes newClass = new Classes(inputText);
+                newClass.setStudents("");
+                // Add the new class to the database
+                long id = classesViewModel.addClass(newClass);
+
+                // After adding the class, fetch all classes again and update the RecyclerView
+                classesViewModel.getAllClasses().observe(getViewLifecycleOwner(), classes -> {
+                    // Update the RecyclerView adapter with the new data
+                    classesAdapter.setClasses(classes);
+                });
+            }
+
+            @Override
+            public void onUpdate(String inputText) {
+                // Handle update
+            }
+
+            @Override
+            public void onDelete(String inputText) {
+                // Handle delete
+            }
+
+            @Override
+            public void onCancel() {
+                // Handle cancel
+            }
+        }));
+
+        binding.rvClasses.setAdapter(classesAdapter);
+        binding.rvClasses.setLayoutManager(new LinearLayoutManager(getContext()));
         return root;
     }
 
@@ -44,3 +80,5 @@ public class FragmentClasses extends Fragment {
         binding = null;
     }
 }
+
+

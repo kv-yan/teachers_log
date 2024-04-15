@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.varda.table.R;
-import com.varda.table.adapter.TableAdapter;
+import com.varda.table.adapter.StudentAdapter;
 import com.varda.table.model.Student;
 import com.varda.table.utils.GenerateStudents;
 
@@ -25,7 +25,7 @@ public class TableActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.rv_table);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        TableAdapter adapter = new TableAdapter(students);
+        StudentAdapter adapter = new StudentAdapter(students);
         recyclerView.setAdapter(adapter);
     }
 }

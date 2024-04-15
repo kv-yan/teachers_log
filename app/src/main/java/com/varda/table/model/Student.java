@@ -2,6 +2,10 @@ package com.varda.table.model;
 
 import java.util.List;
 
+import android.database.Cursor;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Student {
     private String name;
     private List<String> assessment;
@@ -16,6 +20,7 @@ public class Student {
         this.marks = marks;
         this.parentsEmail = parentsEmail;
     }
+
 
     public String getName() {
         return name;
@@ -32,6 +37,7 @@ public class Student {
     public void setAssessment(List<String> assessment) {
         this.assessment = assessment;
     }
+
 
     public String getAverageGrade() {
         return averageGrade;
@@ -57,3 +63,4 @@ public class Student {
         this.parentsEmail = parentsEmail;
     }
 }
+

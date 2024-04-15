@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.varda.table.R;
@@ -17,11 +16,11 @@ import com.varda.table.view.AssessmentItemView;
 
 import java.util.List;
 
-public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> {
+public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder> {
 
     private List<Student> students;
 
-    public TableAdapter(List<Student> students) {
+    public StudentAdapter(List<Student> students) {
         this.students = students;
     }
 
