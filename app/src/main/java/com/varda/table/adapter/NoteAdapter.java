@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.varda.table.R;
 import com.varda.table.model.Note;
-//import com.varda.table.ui.notes.NoteViewModel;
+import com.varda.table.ui.notes.NoteViewModel;
 
 import java.util.List;
 
@@ -23,12 +23,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     private List<Note> notesList;
     private Context context;
-//    private NoteViewModel viewModel;
+    private NoteViewModel viewModel;
 
-    public NoteAdapter(List<Note> notesList, Context context /*, NoteViewModel viewModel*/) {
+    public NoteAdapter(List<Note> notesList, Context context, NoteViewModel viewModel) {
         this.notesList = notesList;
         this.context = context;
-//        this.viewModel = viewModel;
+        this.viewModel = viewModel;
     }
 
     @NonNull
@@ -44,12 +44,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         holder.noteContent.setText(note.getContent());
 
         holder.itemView.setOnLongClickListener(v -> {
-            showPopupMenu(note.getContent(), holder.itemView);
+            showPopupMenu(note, holder.itemView);
             return true;
         });
     }
 
-    private void showPopupMenu(String content, View view) {
+    private void showPopupMenu(Note content, View view) {
 
         PopupMenu popupMenu = new PopupMenu(context, view);
         popupMenu.inflate(R.menu.note_menu);
@@ -59,7 +59,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                 showEditNoteDialog(content);
                 return true;
             } else if (itemId == R.id.menu_delete) {
-//                viewModel.deleteNote(content);
+                viewModel.deleteNote(content);
                 return true;
             }
             return false;
@@ -67,20 +67,18 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         popupMenu.show();
     }
 
-    private void showEditNoteDialog(String content) {
+    private void showEditNoteDialog(Note content) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Edit Note");
 
         final EditText input = new EditText(context);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.setText(content);
+        input.setText(content.getContent());
         builder.setView(input);
 
         builder.setPositiveButton("Save", (dialog, which) -> {
-            String newContent = input.getText().toString();
-            if (!newContent.isEmpty() && !newContent.equals(content)) {
-//                viewModel.updateNote(content, newContent);
-            }
+            content.setContent(input.getText().toString());
+            viewModel.updateNote(content);
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 

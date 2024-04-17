@@ -1,5 +1,6 @@
 package com.varda.table.model;
 
+import java.util.Collections;
 import java.util.List;
 
 import android.database.Cursor;
@@ -19,6 +20,13 @@ public class Student {
         this.averageGrade = averageGrade;
         this.marks = marks;
         this.parentsEmail = parentsEmail;
+    }
+    public Student(String name /*List<String> assessment, String averageGrade, String marks, String parentsEmail*/) {
+        this.name = name;
+        this.assessment = Collections.emptyList();
+        this.averageGrade = "";
+        this.marks = "";
+        this.parentsEmail = "";
     }
 
 

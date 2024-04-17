@@ -10,14 +10,20 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.varda.table.adapter.NoteAdapter;
 import com.varda.table.databinding.FragmentNotesBinding;
+import com.varda.table.factory.NoteViewModelFactory;
+
+import java.util.ArrayList;
 
 public class FragmentNotes extends Fragment {
 
     private FragmentNotesBinding binding;
-    //    private NoteViewModel noteViewModel;
+    private NoteViewModel noteViewModel;
     private NoteAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -25,14 +31,13 @@ public class FragmentNotes extends Fragment {
 
         binding = FragmentNotesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        /*
 
-NoteViewModelFactory factory = new NoteViewModelFactory(requireActivity().getApplication());
+        NoteViewModelFactory factory = new NoteViewModelFactory(requireActivity().getApplication());
         noteViewModel = new ViewModelProvider(this, factory).get(NoteViewModel.class);
-        RecyclerView recyclerView = binding.rvNotes;
+
         adapter = new NoteAdapter(new ArrayList<>(), getContext(), noteViewModel);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvNotes.setAdapter(adapter);
+        binding.rvNotes.setLayoutManager(new LinearLayoutManager(getContext()));
 
         noteViewModel.getNotes().observe(getViewLifecycleOwner(), notes -> adapter.setNotes(notes));
 
@@ -40,7 +45,6 @@ NoteViewModelFactory factory = new NoteViewModelFactory(requireActivity().getApp
         binding.addNewNote.setOnClickListener(v -> {
             showAddNoteDialog();
         });
-*/
         return root;
     }
 
@@ -61,7 +65,7 @@ NoteViewModelFactory factory = new NoteViewModelFactory(requireActivity().getApp
         builder.setPositiveButton("Add", (dialog, which) -> {
             String noteContent = input.getText().toString();
             if (!noteContent.isEmpty()) {
-//                noteViewModel.addNote(noteContent);
+                noteViewModel.addNote(noteContent);
             }
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());

@@ -6,7 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-//import com.varda.table.ui.notes.NoteViewModel;
+import com.varda.table.ui.notes.NoteViewModel;
+
 
 public class NoteViewModelFactory implements ViewModelProvider.Factory {
     private Application application;
@@ -18,8 +19,8 @@ public class NoteViewModelFactory implements ViewModelProvider.Factory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (false/*modelClass.isAssignableFrom(NoteViewModel.class)*/) {
-//            return (T) new NoteViewModel(application);
+        if (modelClass.isAssignableFrom(NoteViewModel.class)) {
+            return (T) new NoteViewModel(application);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
