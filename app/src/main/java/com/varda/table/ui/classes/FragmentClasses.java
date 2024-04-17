@@ -1,7 +1,6 @@
 package com.varda.table.ui.classes;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,29 +42,23 @@ public class FragmentClasses extends Fragment {
             public void onSave(String inputText) {
                 Classes newClass = new Classes(inputText);
                 newClass.setStudents("");
-                // Add the new class to the database
                 long id = classesViewModel.addClass(newClass);
 
-                // After adding the class, fetch all classes again and update the RecyclerView
                 classesViewModel.getAllClasses().observe(getViewLifecycleOwner(), classes -> {
-                    // Update the RecyclerView adapter with the new data
                     classesAdapter.setClasses(classes);
                 });
             }
 
             @Override
             public void onUpdate(String inputText) {
-                // Handle update
             }
 
             @Override
             public void onDelete(String inputText) {
-                // Handle delete
             }
 
             @Override
             public void onCancel() {
-                // Handle cancel
             }
         }));
 

@@ -1,4 +1,4 @@
-package com.varda.table.activity;
+package com.varda.table.activity.main;
 
 import android.os.Bundle;
 

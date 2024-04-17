@@ -11,8 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.varda.table.R;
-import com.varda.table.activity.TableActivity;
+import com.varda.table.activity.table.TableActivity;
 import com.varda.table.model.Classes;
+import com.varda.table.utils.Constants;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.ViewHold
             Context context = view.getContext();
 
             Intent tableIntent = new Intent(context, TableActivity.class);
-
+            tableIntent.putExtra(Constants.CLICKED_CLASSES_ITEM, position);
             context.startActivity(tableIntent);
         });
     }

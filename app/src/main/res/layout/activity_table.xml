@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="25dp"
-    tools:context=".activity.TableActivity">
+    tools:context=".activity.table.TableActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_table"
@@ -13,7 +13,7 @@
         android:background="@drawable/table_background"
         android:orientation="horizontal"
         android:padding="15dp"
-        tools:context=".activity.TableActivity"
+        tools:context=".activity.table.TableActivity"
         tools:listitem="@layout/student_item" />
 
 </HorizontalScrollView>
