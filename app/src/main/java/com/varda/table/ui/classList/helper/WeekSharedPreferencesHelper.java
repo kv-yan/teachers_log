@@ -1,5 +1,7 @@
 package com.varda.table.ui.classList.helper;
 
+import static com.varda.table.utils.Constants.PREF_NAME;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -13,7 +15,6 @@ import java.util.List;
 
 public class WeekSharedPreferencesHelper {
 
-    private static final String PREF_NAME = "MyPrefs";
 
     private SharedPreferences sharedPreferences;
 
