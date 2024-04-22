@@ -4,4 +4,7 @@
     <string name="title_class_list">Դասացուցակ </string>
     <string name="title_notes">Նշումներ</string>
     <string name="title_settings">Կարգավորումներ</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
 </resources>

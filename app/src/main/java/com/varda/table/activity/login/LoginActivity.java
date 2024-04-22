@@ -16,20 +16,24 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AuthHelper helper = new AuthHelper(getApplicationContext());
+
+
         Intent mainFlow = new Intent(getApplicationContext(), MainActivity.class);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         if (helper.getAuthStatus()) {
             startActivity(mainFlow);
         }
+        String info = "Info\nEmail '" + helper.getEmail() + "'\nPass '" + helper.getPassword() + "'";
 
         binding.btnLogin.setOnClickListener(view -> {
             helper.setAuthStatus(true);
+
+            helper.setEmail(binding.textEmail.getText().toString());
+            helper.setPassword(binding.textPass.getText().toString());
             startActivity(mainFlow);
-
         });
-
-
-
+        binding.status.setText(info);
     }
 }
