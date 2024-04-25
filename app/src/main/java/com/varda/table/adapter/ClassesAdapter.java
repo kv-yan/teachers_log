@@ -39,9 +39,8 @@ public class ClassesAdapter extends RecyclerView.Adapter<ClassesAdapter.ViewHold
 
         holder.itemView.setOnClickListener(view -> {
             Context context = view.getContext();
-
             Intent tableIntent = new Intent(context, TableActivity.class);
-            tableIntent.putExtra(Constants.CLICKED_CLASSES_ITEM, position);
+            tableIntent.putExtra(Constants.CLICKED_CLASSES_ITEM, classesList.get(position).getId());
             context.startActivity(tableIntent);
         });
     }

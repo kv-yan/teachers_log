@@ -33,7 +33,6 @@ public class FragmentClasses extends Fragment {
         classesAdapter = new ClassesAdapter(Collections.emptyList());
 
         classesViewModel.getAllClasses().observe(getViewLifecycleOwner(), classes -> {
-            // Update the RecyclerView adapter with the new data
             classesAdapter.setClasses(classes);
         });
 

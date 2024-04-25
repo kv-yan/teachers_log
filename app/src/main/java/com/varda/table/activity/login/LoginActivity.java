@@ -17,8 +17,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AuthHelper helper = new AuthHelper(getApplicationContext());
 
-
         Intent mainFlow = new Intent(getApplicationContext(), MainActivity.class);
+        mainFlow.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -29,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
 
         binding.btnLogin.setOnClickListener(view -> {
             helper.setAuthStatus(true);
-
             helper.setEmail(binding.textEmail.getText().toString());
             helper.setPassword(binding.textPass.getText().toString());
             startActivity(mainFlow);

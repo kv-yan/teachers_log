@@ -5,6 +5,19 @@ public class Classes {
     private String className;
     private String students;
 
+    public Classes(String className) {
+        this.className = className;
+        this.students = "";
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getStudents() {
         return students;
     }
@@ -13,23 +26,11 @@ public class Classes {
         this.students = students;
     }
 
-    public Classes(String className) {
-        this.className = className;
-        this.students = "";
-    }
-
     public String getClassName() {
         return className;
     }
 
     public void setClassName(String className) {
         this.className = className;
-    }
-
-    public void setId(int anInt) {
-        this.id = anInt;
-    }
-    public void getId(int anInt) {
-
     }
 }

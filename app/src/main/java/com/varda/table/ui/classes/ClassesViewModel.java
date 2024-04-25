@@ -23,7 +23,6 @@ public class ClassesViewModel extends AndroidViewModel {
         databaseHelper = new ClassesDatabaseHelper(application.getApplicationContext());
     }
 
-    // Метод для добавления класса в базу данных
     public long addClass(Classes classes) {
        return databaseHelper.addClass(classes);
     }

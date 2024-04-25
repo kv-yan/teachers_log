@@ -42,6 +42,11 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         return students.size();
     }
 
+    public void setStudents(List<Student> newStudents){
+        this.students = newStudents;
+        this.notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView studentName;
         LinearLayout assessmentLinerLayout;
