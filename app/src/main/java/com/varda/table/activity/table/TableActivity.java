@@ -12,6 +12,7 @@ import com.varda.table.adapter.StudentAdapter;
 import com.varda.table.databinding.ActivityTableBinding;
 import com.varda.table.dialog.AddNewStudentDialogHelper;
 import com.varda.table.factory.TableViewModelFactory;
+import com.varda.table.mail.JavaMailAPI;
 import com.varda.table.model.Classes;
 import com.varda.table.model.Student;
 import com.varda.table.utils.Constants;
@@ -50,7 +51,7 @@ public class TableActivity extends AppCompatActivity {
 
 
 
-        binding.button.setOnClickListener(view -> {
+        /*binding.button.setOnClickListener(view -> {
             AddNewStudentDialogHelper.showAddClassDialog(this, new AddNewStudentDialogHelper.DialogCallback() {
                 @Override
                 public void onSave(String name, String email) {
@@ -77,6 +78,13 @@ public class TableActivity extends AppCompatActivity {
 
                 }
             });
+        })*/;
+
+
+        binding.button.setOnClickListener(view -> {
+            JavaMailAPI javaMailAPI = new JavaMailAPI(this, "vardanyankaren924@gmail.com", "Test message", "Checking sending functionality");
+
+            javaMailAPI.execute();
         });
 
         binding.rvTable.setAdapter(adapter);
