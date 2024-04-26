@@ -3,10 +3,6 @@ package com.varda.table.model;
 import java.util.Collections;
 import java.util.List;
 
-import android.database.Cursor;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Student {
     private String name;
     private List<String> assessment;
@@ -21,6 +17,7 @@ public class Student {
         this.marks = marks;
         this.parentsEmail = parentsEmail;
     }
+
     public Student(String name /*List<String> assessment, String averageGrade, String marks, String parentsEmail*/) {
         this.name = name;
         this.assessment = Collections.emptyList();
@@ -40,6 +37,30 @@ public class Student {
 
     public List<String> getAssessment() {
         return assessment;
+    }
+
+    public int calculateMidAssessment() {
+        double total = 0;
+        if (assessment != null && !assessment.isEmpty()) {
+            for (String str : assessment) {
+                total += Double.parseDouble(str);
+            }
+            return (int) (total / assessment.size());
+        } else {
+            return 0;
+        }
+    }
+
+    public int getMissedCount() {
+        int total = 0;
+        if (assessment != null && !assessment.isEmpty()) {
+            for (String str : assessment) {
+                if (str.contains("բ")) total++;
+            }
+            return total;
+        } else {
+            return 0;
+        }
     }
 
     public void setAssessment(List<String> assessment) {

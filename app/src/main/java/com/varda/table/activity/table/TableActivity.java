@@ -1,19 +1,18 @@
 package com.varda.table.activity.table;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.varda.table.R;
+import com.varda.table.callback.StudentItemClick;
 import com.varda.table.adapter.StudentAdapter;
 import com.varda.table.databinding.ActivityTableBinding;
 import com.varda.table.dialog.AddNewStudentDialogHelper;
+import com.varda.table.dialog.StudentDialog;
 import com.varda.table.factory.TableViewModelFactory;
-import com.varda.table.mail.JavaMailAPI;
-import com.varda.table.model.Classes;
 import com.varda.table.model.Student;
 import com.varda.table.utils.Constants;
 
@@ -24,7 +23,7 @@ import java.util.List;
 public class TableActivity extends AppCompatActivity {
     TableViewModel tableViewModel;
 
-    ActivityTableBinding binding ;
+    ActivityTableBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,21 @@ public class TableActivity extends AppCompatActivity {
         tableViewModel = new ViewModelProvider(this, factory).get(TableViewModel.class);
 
 
-        StudentAdapter adapter = new StudentAdapter(Collections.emptyList());
+        StudentAdapter adapter = new StudentAdapter(Collections.emptyList(), new StudentItemClick() {
+            @Override
+            public View.OnLongClickListener onLongClick(Student student) {
+                return view -> {
+                    StudentDialog studentDialog = new StudentDialog(TableActivity.this,student);
+                    studentDialog.show();
+                    return false;
+                };
+            }
+
+            @Override
+            public View.OnClickListener onAssessmentClick(Student student) {
+                return null;
+            }
+        });
         binding.rvTable.setLayoutManager(new LinearLayoutManager(this));
 
         int clickedIndex = getIntent().getIntExtra(Constants.CLICKED_CLASSES_ITEM, 0);
@@ -50,17 +63,15 @@ public class TableActivity extends AppCompatActivity {
         });
 
 
-
-        /*binding.button.setOnClickListener(view -> {
+        binding.button.setOnClickListener(view -> {
             AddNewStudentDialogHelper.showAddClassDialog(this, new AddNewStudentDialogHelper.DialogCallback() {
                 @Override
                 public void onSave(String name, String email) {
 
                     Student newStudent = new Student(name, new ArrayList<>(), "", "", email);
-                    tableViewModel.addStudentToClass((int)tableViewModel.currentClassId , newStudent);
-                   String updated = tableViewModel.getClassById((int)tableViewModel.currentClassId).getValue().getStudents();
-
-                   adapter.setStudents(tableViewModel.getStudentListFromJson(updated));
+                    tableViewModel.addStudentToClass((int) tableViewModel.currentClassId, newStudent);
+                    String updated = tableViewModel.getClassById((int) tableViewModel.currentClassId).getValue().getStudents();
+                    adapter.setStudents(tableViewModel.getStudentListFromJson(updated));
                 }
 
                 @Override
@@ -78,14 +89,8 @@ public class TableActivity extends AppCompatActivity {
 
                 }
             });
-        })*/;
-
-
-        binding.button.setOnClickListener(view -> {
-            JavaMailAPI javaMailAPI = new JavaMailAPI(this, "vardanyankaren924@gmail.com", "Test message", "Checking sending functionality");
-
-            javaMailAPI.execute();
         });
+
 
         binding.rvTable.setAdapter(adapter);
     }

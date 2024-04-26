@@ -3,6 +3,7 @@ package com.varda.table.mail;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Properties;
 
@@ -19,7 +20,7 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
     private Context context;
 
     private Session session;
-    private String email, subject, message;
+    private final String email, subject, message;
 
     public JavaMailAPI(Context context, String email, String subject, String message) {
         this.context = context;
@@ -53,7 +54,7 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
             Transport.send(mimeMessage);
         } catch (MessagingException e) {
             e.printStackTrace();
-            Log.e("VARDANYAN", "doInBackground: exception ::: " + e.getMessage() );
+            Toast.makeText(context, "Նամակը չուղարկվեց", Toast.LENGTH_SHORT).show();
         }
 
         return null;

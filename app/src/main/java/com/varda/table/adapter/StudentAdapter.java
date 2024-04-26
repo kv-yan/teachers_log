@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.varda.table.R;
+import com.varda.table.callback.StudentItemClick;
 import com.varda.table.model.Student;
 import com.varda.table.view.AssessmentItemView;
 
@@ -19,9 +20,15 @@ import java.util.List;
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder> {
 
     private List<Student> students;
+    private StudentItemClick onLongClickListener;
 
     public StudentAdapter(List<Student> students) {
         this.students = students;
+    }
+
+    public StudentAdapter(List<Student> students, StudentItemClick onLongClickListener) {
+        this.students = students;
+        this.onLongClickListener = onLongClickListener;
     }
 
     @NonNull
@@ -35,6 +42,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Student student = students.get(position);
         holder.bind(student);
+
+        holder.itemView.setOnLongClickListener(onLongClickListener.onLongClick(student));
     }
 
     @Override
@@ -42,7 +51,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         return students.size();
     }
 
-    public void setStudents(List<Student> newStudents){
+    public void setStudents(List<Student> newStudents) {
         this.students = newStudents;
         this.notifyDataSetChanged();
     }
