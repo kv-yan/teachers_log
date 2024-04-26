@@ -20,15 +20,15 @@ import java.util.List;
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder> {
 
     private List<Student> students;
-    private StudentItemClick onLongClickListener;
+    private StudentItemClick studentItemClick;
 
     public StudentAdapter(List<Student> students) {
         this.students = students;
     }
 
-    public StudentAdapter(List<Student> students, StudentItemClick onLongClickListener) {
+    public StudentAdapter(List<Student> students, StudentItemClick studentItemClick) {
         this.students = students;
-        this.onLongClickListener = onLongClickListener;
+        this.studentItemClick = studentItemClick;
     }
 
     @NonNull
@@ -41,9 +41,9 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Student student = students.get(position);
-        holder.bind(student);
+        holder.bind(student, studentItemClick.onAssessmentClick(student));
 
-        holder.itemView.setOnLongClickListener(onLongClickListener.onLongClick(student));
+        holder.itemView.setOnLongClickListener(studentItemClick.onLongClick(student));
     }
 
     @Override
@@ -72,19 +72,19 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             studentParentsEmail = itemView.findViewById(R.id.student_parents_email);
         }
 
-        public void bind(Student student) {
+        public void bind(Student student, View.OnClickListener scoreClick) {
             studentName.setText(student.getName());
             studentAverageGrade.setText(student.getAverageGrade());
             studentMarks.setText(student.getMarks());
             studentParentsEmail.setText(student.getParentsEmail());
 
-            // Remove all existing assessment views
-            assessmentLinerLayout.removeAllViews();
+            studentName.setOnClickListener(scoreClick);
 
-            // Add assessment views
+            assessmentLinerLayout.removeAllViews();
             for (String assessment : student.getAssessment()) {
                 AssessmentItemView assessmentItemView = new AssessmentItemView(assessmentLinerLayout.getContext());
                 assessmentItemView.setAssessment(assessment);
+                assessmentItemView.setOnClickListener(scoreClick);
                 assessmentLinerLayout.addView(assessmentItemView);
             }
         }

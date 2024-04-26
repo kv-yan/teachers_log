@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.varda.table.callback.StudentItemClick;
 import com.varda.table.adapter.StudentAdapter;
+import com.varda.table.callback.StudentScoreClick;
 import com.varda.table.databinding.ActivityTableBinding;
 import com.varda.table.dialog.AddNewStudentDialogHelper;
 import com.varda.table.dialog.StudentDialog;
+import com.varda.table.dialog.StudentScoreDialog;
 import com.varda.table.factory.TableViewModelFactory;
 import com.varda.table.model.Student;
 import com.varda.table.utils.Constants;
@@ -47,7 +49,18 @@ public class TableActivity extends AppCompatActivity {
 
             @Override
             public View.OnClickListener onAssessmentClick(Student student) {
-                return null;
+                return new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        StudentScoreDialog dialog = new StudentScoreDialog(TableActivity.this, student, new StudentScoreClick() {
+                            @Override
+                            public View.OnClickListener onScoreClick(Student student) {
+                                return null;
+                            }
+                        });
+                        dialog.show();
+                    }
+                };
             }
         });
         binding.rvTable.setLayoutManager(new LinearLayoutManager(this));

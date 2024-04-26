@@ -8,3 +8,4 @@ public interface StudentItemClick {
     public View.OnLongClickListener onLongClick(Student student);
     public View.OnClickListener onAssessmentClick(Student student);
 }
+
