@@ -7,9 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.varda.table.callback.StudentItemClick;
 import com.varda.table.adapter.StudentAdapter;
-import com.varda.table.callback.StudentScoreClick;
+import com.varda.table.callback.StudentItemClick;
 import com.varda.table.databinding.ActivityTableBinding;
 import com.varda.table.dialog.AddNewStudentDialogHelper;
 import com.varda.table.dialog.StudentDialog;
@@ -41,25 +40,9 @@ public class TableActivity extends AppCompatActivity {
             @Override
             public View.OnLongClickListener onLongClick(Student student) {
                 return view -> {
-                    StudentDialog studentDialog = new StudentDialog(TableActivity.this,student);
+                    StudentDialog studentDialog = new StudentDialog(TableActivity.this, student);
                     studentDialog.show();
                     return false;
-                };
-            }
-
-            @Override
-            public View.OnClickListener onAssessmentClick(Student student) {
-                return new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        StudentScoreDialog dialog = new StudentScoreDialog(TableActivity.this, student, new StudentScoreClick() {
-                            @Override
-                            public View.OnClickListener onScoreClick(Student student) {
-                                return null;
-                            }
-                        });
-                        dialog.show();
-                    }
                 };
             }
         });
@@ -80,8 +63,7 @@ public class TableActivity extends AppCompatActivity {
             AddNewStudentDialogHelper.showAddClassDialog(this, new AddNewStudentDialogHelper.DialogCallback() {
                 @Override
                 public void onSave(String name, String email) {
-
-                    Student newStudent = new Student(name, new ArrayList<>(), "", "", email);
+                    Student newStudent = new Student(name, getAssessment(), "", "", email);
                     tableViewModel.addStudentToClass((int) tableViewModel.currentClassId, newStudent);
                     String updated = tableViewModel.getClassById((int) tableViewModel.currentClassId).getValue().getStudents();
                     adapter.setStudents(tableViewModel.getStudentListFromJson(updated));
@@ -104,7 +86,16 @@ public class TableActivity extends AppCompatActivity {
             });
         });
 
-
         binding.rvTable.setAdapter(adapter);
+    }
+
+    private List<String> getAssessment(){
+        List<String> list = new ArrayList<>() ;
+
+        list.add("9");
+        list.add("7");
+        list.add("8");
+        list.add("10");
+        return list;
     }
 }

@@ -3,6 +3,7 @@ package com.varda.table.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,16 +20,16 @@ import java.util.List;
 
 public class StudentScoreDialog extends Dialog {
     Student student;
+    TextView textView;
     Context context;
-    StudentScoreClick studentItemClick;
 
-    public StudentScoreDialog(Context context, Student student, StudentScoreClick studentItemClick) {
+    public StudentScoreDialog(Context context, Student student, TextView textView) {
         super(context);
         this.context = context;
         this.student = student;
-        this.studentItemClick = studentItemClick;
-
+        this.textView = textView;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,11 @@ public class StudentScoreDialog extends Dialog {
         scoreRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         ScoreAdapter adapter = getScoreAdapter();
         scoreRecyclerView.setAdapter(adapter);
+
+        adapter.setActionClick(clickedScore -> (View.OnClickListener) view -> {
+            textView.setText(clickedScore);
+            StudentScoreDialog.this.cancel();
+        });
     }
 
     @NonNull
@@ -62,6 +68,6 @@ public class StudentScoreDialog extends Dialog {
         scoreList.add("հ/բ");
         scoreList.add("ու");
 
-        return new ScoreAdapter(context, student, scoreList, studentItemClick);
+        return new ScoreAdapter(context, student, scoreList);
     }
 }

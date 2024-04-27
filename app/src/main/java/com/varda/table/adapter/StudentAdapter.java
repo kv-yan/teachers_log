@@ -41,7 +41,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Student student = students.get(position);
-        holder.bind(student, studentItemClick.onAssessmentClick(student));
+        holder.bind(student);
 
         holder.itemView.setOnLongClickListener(studentItemClick.onLongClick(student));
     }
@@ -72,19 +72,16 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             studentParentsEmail = itemView.findViewById(R.id.student_parents_email);
         }
 
-        public void bind(Student student, View.OnClickListener scoreClick) {
+        public void bind(Student student) {
             studentName.setText(student.getName());
             studentAverageGrade.setText(student.getAverageGrade());
             studentMarks.setText(student.getMarks());
             studentParentsEmail.setText(student.getParentsEmail());
 
-            studentName.setOnClickListener(scoreClick);
-
             assessmentLinerLayout.removeAllViews();
             for (String assessment : student.getAssessment()) {
-                AssessmentItemView assessmentItemView = new AssessmentItemView(assessmentLinerLayout.getContext());
+                AssessmentItemView assessmentItemView = new AssessmentItemView(assessmentLinerLayout.getContext(), student);
                 assessmentItemView.setAssessment(assessment);
-                assessmentItemView.setOnClickListener(scoreClick);
                 assessmentLinerLayout.addView(assessmentItemView);
             }
         }

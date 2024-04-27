@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.varda.table.R;
-import com.varda.table.callback.StudentItemClick;
 import com.varda.table.callback.StudentScoreClick;
 import com.varda.table.model.Student;
 
@@ -21,13 +20,12 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ViewHolder> 
     private List<String> scoreList;
     private Context context;
     private Student student;
-    private StudentScoreClick studentItemClick;
+    private StudentScoreClick onClickListener;
 
-    public ScoreAdapter(Context context, Student student, List<String> scoreList, StudentScoreClick studentItemClick) {
+    public ScoreAdapter(Context context, Student student, List<String> scoreList) {
         this.scoreList = scoreList;
         this.context = context;
         this.student = student;
-        this.studentItemClick = studentItemClick;
     }
 
     @NonNull
@@ -41,17 +39,17 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String score = scoreList.get(position);
         holder.noteContent.setText(score);
-
-        holder.itemView.setOnClickListener(studentItemClick.onScoreClick(student));
+        holder.itemView.setOnClickListener(onClickListener.onScoreClick(score));
     }
-
-
-
 
 
     @Override
     public int getItemCount() {
         return scoreList.size();
+    }
+
+    public void setActionClick(StudentScoreClick onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
 
