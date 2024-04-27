@@ -6,19 +6,20 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.varda.table.database.classes.ClassesDatabaseHelper;
+import com.varda.table.model.Assessment;
 import com.varda.table.model.Classes;
 import com.varda.table.model.Student;
 
-import java.io.Closeable;
 import java.util.List;
+import java.util.Objects;
 
 public class TableViewModel extends AndroidViewModel {
-    public int currentClassId ;
+    public int currentClassId;
 
     private ClassesDatabaseHelper databaseHelper;
+
     public TableViewModel(@NonNull Application application) {
         super(application);
         databaseHelper = new ClassesDatabaseHelper(application.getApplicationContext());
@@ -32,11 +33,34 @@ public class TableViewModel extends AndroidViewModel {
         return classesLiveData;
     }
 
-    public List<Student> getStudentListFromJson(String students ){
-       return databaseHelper.getStudentsListFromJson(students);
+    public List<Student> getStudentListFromJson(String students) {
+        return databaseHelper.getStudentsListFromJson(students);
     }
 
     public void addStudentToClass(int classId, Student student) {
         databaseHelper.addStudentToClass(classId, student);
     }
+
+    public void saveAssessment(Student student) {
+        List<Student> studentList = getStudentListFromJson(getClassById(currentClassId).getValue().getStudents());
+
+        for (Student stItem : studentList) {
+            if (Objects.equals(stItem.getParentsEmail(), student.getParentsEmail())) {
+                stItem.setAssessment(student.getAssessment());
+            }
+        }
+
+        databaseHelper.updateClassContent(currentClassId, studentList);
+    }
+
+    public void addNewDay(String dayOf) {
+        List<Student> studentList = getStudentListFromJson(getClassById(currentClassId).getValue().getStudents());
+
+        for (Student student : studentList) {
+            student.getAssessment().add(new Assessment(dayOf, ""));
+        }
+
+        databaseHelper.updateClassContent(currentClassId,studentList);
+    }
+
 }

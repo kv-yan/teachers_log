@@ -3,6 +3,7 @@ package com.varda.table.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,23 +12,29 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.varda.table.R;
+import com.varda.table.activity.table.TableViewModel;
 import com.varda.table.adapter.ScoreAdapter;
-import com.varda.table.callback.StudentScoreClick;
+import com.varda.table.model.Assessment;
 import com.varda.table.model.Student;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class StudentScoreDialog extends Dialog {
     Student student;
     TextView textView;
     Context context;
+    Assessment assessment;
+    TableViewModel viewModel;
 
-    public StudentScoreDialog(Context context, Student student, TextView textView) {
+    public StudentScoreDialog(Context context, Student student, Assessment assessment, TextView textView, TableViewModel viewModel) {
         super(context);
         this.context = context;
         this.student = student;
         this.textView = textView;
+        this.assessment = assessment;
+        this.viewModel = viewModel;
     }
 
 
@@ -47,6 +54,15 @@ public class StudentScoreDialog extends Dialog {
 
         adapter.setActionClick(clickedScore -> (View.OnClickListener) view -> {
             textView.setText(clickedScore);
+
+            for (Assessment assessments: student.getAssessment()){
+                if (assessments.getDayOf() == assessment.getDayOf()){
+                    assessments.setScore(clickedScore);
+                    Log.e("VARDANYAN", "onCreate: UPDATED" );
+                }
+            }
+
+            viewModel.saveAssessment(student);
             StudentScoreDialog.this.cancel();
         });
     }

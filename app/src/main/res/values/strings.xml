@@ -7,4 +7,8 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="log_in">Log in</string>
+
+    <string name="add_student">Աշակերտ</string>
+    <string name="add_new_day">Նոր օր</string>
+
 </resources>

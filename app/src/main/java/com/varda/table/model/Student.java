@@ -5,12 +5,12 @@ import java.util.List;
 
 public class Student {
     private String name;
-    private List<String> assessment;
+    private List<Assessment> assessment;
     private String averageGrade;
     private String marks;
     private String parentsEmail;
 
-    public Student(String name, List<String> assessment, String averageGrade, String marks, String parentsEmail) {
+    public Student(String name, List<Assessment> assessment, String averageGrade, String marks, String parentsEmail) {
         this.name = name;
         this.assessment = assessment;
         this.averageGrade = averageGrade;
@@ -35,15 +35,15 @@ public class Student {
         this.name = name;
     }
 
-    public List<String> getAssessment() {
+    public List<Assessment> getAssessment() {
         return assessment;
     }
 
     public int calculateMidAssessment() {
         double total = 0;
         if (assessment != null && !assessment.isEmpty()) {
-            for (String str : assessment) {
-                total += Double.parseDouble(str);
+            for (Assessment str : assessment) {
+                total += Double.parseDouble(str.getScore());
             }
             return (int) (total / assessment.size());
         } else {
@@ -54,8 +54,8 @@ public class Student {
     public int getMissedCount() {
         int total = 0;
         if (assessment != null && !assessment.isEmpty()) {
-            for (String str : assessment) {
-                if (str.contains("բ")) total++;
+            for (Assessment str : assessment) {
+                if (str.getScore().contains("բ")) total++;
             }
             return total;
         } else {
@@ -63,7 +63,7 @@ public class Student {
         }
     }
 
-    public void setAssessment(List<String> assessment) {
+    public void setAssessment(List<Assessment> assessment) {
         this.assessment = assessment;
     }
 

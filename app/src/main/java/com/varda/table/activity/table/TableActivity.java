@@ -1,19 +1,25 @@
 package com.varda.table.activity.table;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.varda.table.R;
 import com.varda.table.adapter.StudentAdapter;
 import com.varda.table.callback.StudentItemClick;
 import com.varda.table.databinding.ActivityTableBinding;
+import com.varda.table.dialog.AddNewDayDialogHelper;
 import com.varda.table.dialog.AddNewStudentDialogHelper;
 import com.varda.table.dialog.StudentDialog;
-import com.varda.table.dialog.StudentScoreDialog;
 import com.varda.table.factory.TableViewModelFactory;
+import com.varda.table.model.Assessment;
 import com.varda.table.model.Student;
 import com.varda.table.utils.Constants;
 
@@ -26,6 +32,8 @@ public class TableActivity extends AppCompatActivity {
 
     ActivityTableBinding binding;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +43,10 @@ public class TableActivity extends AppCompatActivity {
         TableViewModelFactory factory = new TableViewModelFactory(getApplication());
         tableViewModel = new ViewModelProvider(this, factory).get(TableViewModel.class);
 
+        binding.rvTable.setLayoutManager(new LinearLayoutManager(this));
 
-        StudentAdapter adapter = new StudentAdapter(Collections.emptyList(), new StudentItemClick() {
+        int clickedIndex = getIntent().getIntExtra(Constants.CLICKED_CLASSES_ITEM, 0);
+        StudentAdapter adapter = new StudentAdapter(Collections.emptyList(), tableViewModel, new StudentItemClick() {
             @Override
             public View.OnLongClickListener onLongClick(Student student) {
                 return view -> {
@@ -46,27 +56,48 @@ public class TableActivity extends AppCompatActivity {
                 };
             }
         });
-        binding.rvTable.setLayoutManager(new LinearLayoutManager(this));
-
-        int clickedIndex = getIntent().getIntExtra(Constants.CLICKED_CLASSES_ITEM, 0);
-
 
         tableViewModel.getClassById(clickedIndex).observe(this, classes -> {
+            getSupportActionBar().setTitle(classes.getClassName());
             List<Student> students = tableViewModel.getStudentListFromJson(classes.getStudents());
             if (students != null) {
                 adapter.setStudents(students);
             }
         });
 
+        binding.rvTable.setAdapter(adapter);
+    }
 
-        binding.button.setOnClickListener(view -> {
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.table_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        StudentAdapter adapter = new StudentAdapter(Collections.emptyList(), tableViewModel, new StudentItemClick() {
+            @Override
+            public View.OnLongClickListener onLongClick(Student student) {
+                return view -> {
+                    StudentDialog studentDialog = new StudentDialog(TableActivity.this, student);
+                    studentDialog.show();
+                    return false;
+                };
+            }
+        });
+        if (item.getItemId() == R.id.add_new_student) {
             AddNewStudentDialogHelper.showAddClassDialog(this, new AddNewStudentDialogHelper.DialogCallback() {
                 @Override
                 public void onSave(String name, String email) {
-                    Student newStudent = new Student(name, getAssessment(), "", "", email);
+                    Student newStudent = new Student(name, getAssessmentForNewStudent(), "", "", email);
                     tableViewModel.addStudentToClass((int) tableViewModel.currentClassId, newStudent);
                     String updated = tableViewModel.getClassById((int) tableViewModel.currentClassId).getValue().getStudents();
                     adapter.setStudents(tableViewModel.getStudentListFromJson(updated));
+                    updateView();
                 }
 
                 @Override
@@ -84,18 +115,73 @@ public class TableActivity extends AppCompatActivity {
 
                 }
             });
+            return true;
+        } else if (item.getItemId() == R.id.add_new_day) {
+            AddNewDayDialogHelper dialogHelper = new AddNewDayDialogHelper();
+            dialogHelper.showAddNewDayDialog(this, new AddNewDayDialogHelper.DialogCallback() {
+                @Override
+                public void onSave(String inputText) {
+                    tableViewModel.addNewDay(inputText);
+                    updateView();
+                }
+
+                @Override
+                public void onUpdate(String inputText) {
+
+                }
+
+                @Override
+                public void onDelete(String inputText) {
+
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+            });
+            return true;
+        }
+
+        binding.rvTable.setAdapter(adapter);
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void updateView() {
+        int clickedIndex = getIntent().getIntExtra(Constants.CLICKED_CLASSES_ITEM, 0);
+        StudentAdapter adapter = new StudentAdapter(Collections.emptyList(), tableViewModel, new StudentItemClick() {
+            @Override
+            public View.OnLongClickListener onLongClick(Student student) {
+                return view -> {
+                    StudentDialog studentDialog = new StudentDialog(TableActivity.this, student);
+                    studentDialog.show();
+                    return false;
+                };
+            }
         });
 
+        tableViewModel.getClassById(clickedIndex).observe(this, classes -> {
+            List<Student> students = tableViewModel.getStudentListFromJson(classes.getStudents());
+            if (students != null) {
+                adapter.setStudents(students);
+            }
+        });
         binding.rvTable.setAdapter(adapter);
     }
 
-    private List<String> getAssessment(){
-        List<String> list = new ArrayList<>() ;
+    private List<Assessment> getAssessmentForNewStudent() {
+        int clickedIndex = getIntent().getIntExtra(Constants.CLICKED_CLASSES_ITEM, 0);
 
-        list.add("9");
-        list.add("7");
-        list.add("8");
-        list.add("10");
-        return list;
+        try {
+            List<Assessment> minCount = tableViewModel.getStudentListFromJson(tableViewModel.getClassById(clickedIndex).getValue().getStudents()).get(0).getAssessment();
+
+            for (Assessment item : minCount) {
+                item.setScore("");
+            }
+            return minCount;
+
+        } catch (Exception exception) {
+            return new ArrayList<>(1);
+        }
     }
 }
