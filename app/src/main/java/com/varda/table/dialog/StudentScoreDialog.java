@@ -58,7 +58,6 @@ public class StudentScoreDialog extends Dialog {
             for (Assessment assessments: student.getAssessment()){
                 if (assessments.getDayOf() == assessment.getDayOf()){
                     assessments.setScore(clickedScore);
-                    Log.e("VARDANYAN", "onCreate: UPDATED" );
                 }
             }
 

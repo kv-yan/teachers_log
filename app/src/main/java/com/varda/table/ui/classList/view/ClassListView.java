@@ -65,7 +65,6 @@ public class ClassListView extends LinearLayout {
     private Handler handler = new Handler();
     private Runnable textChangedRunnable = () -> {
         updateWeekData();
-        Log.e("VARDANYAN", "run: saved" );
     };
 
     private TextWatcher createTextWatcher() {

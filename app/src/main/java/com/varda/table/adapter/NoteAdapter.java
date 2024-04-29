@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.varda.table.R;
 import com.varda.table.model.Note;
 import com.varda.table.ui.notes.NoteViewModel;
+import com.varda.table.utils.ClipboardUtil;
 
 import java.util.List;
 
@@ -60,6 +61,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                 return true;
             } else if (itemId == R.id.menu_delete) {
                 viewModel.deleteNote(content);
+                return true;
+            } else if (itemId == R.id.menu_copy) {
+                ClipboardUtil.copyToClipboard(context, content.getContent());
                 return true;
             }
             return false;
