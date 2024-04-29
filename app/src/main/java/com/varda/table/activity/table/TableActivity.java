@@ -100,15 +100,6 @@ public class TableActivity extends AppCompatActivity {
                     updateView();
                 }
 
-                @Override
-                public void onUpdate(String name, String mail) {
-
-                }
-
-                @Override
-                public void onDelete(String name, String mail) {
-
-                }
 
                 @Override
                 public void onCancel() {
@@ -117,24 +108,13 @@ public class TableActivity extends AppCompatActivity {
             });
             return true;
         } else if (item.getItemId() == R.id.add_new_day) {
-            AddNewDayDialogHelper dialogHelper = new AddNewDayDialogHelper();
-            dialogHelper.showAddNewDayDialog(this, new AddNewDayDialogHelper.DialogCallback() {
+
+            AddNewDayDialogHelper.showDatePickerDialog(this, new AddNewDayDialogHelper.DialogCallback() {
                 @Override
                 public void onSave(String inputText) {
                     tableViewModel.addNewDay(inputText);
                     updateView();
                 }
-
-                @Override
-                public void onUpdate(String inputText) {
-
-                }
-
-                @Override
-                public void onDelete(String inputText) {
-
-                }
-
                 @Override
                 public void onCancel() {
 
