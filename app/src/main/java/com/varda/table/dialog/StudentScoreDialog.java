@@ -48,7 +48,7 @@ public class StudentScoreDialog extends Dialog {
 
         nameTextView.setText(student.getName());
 
-        scoreRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        scoreRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         ScoreAdapter adapter = getScoreAdapter();
         scoreRecyclerView.setAdapter(adapter);
 

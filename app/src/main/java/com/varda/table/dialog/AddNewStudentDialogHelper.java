@@ -14,8 +14,6 @@ public class AddNewStudentDialogHelper {
     public interface DialogCallback {
         void onSave(String name,String mail);
 
-
-
         void onCancel();
     }
 

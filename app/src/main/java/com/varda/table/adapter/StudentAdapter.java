@@ -65,7 +65,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             studentName = itemView.findViewById(R.id.student_name);
-            assessmentLinerLayout = itemView.findViewById(R.id.student_assessment_recycler_view);
+            assessmentLinerLayout = itemView.findViewById(R.id.student_assessment);
             studentAverageGrade = itemView.findViewById(R.id.student_average_grade);
             studentMarks = itemView.findViewById(R.id.student_marks);
             studentParentsEmail = itemView.findViewById(R.id.student_parents_email);

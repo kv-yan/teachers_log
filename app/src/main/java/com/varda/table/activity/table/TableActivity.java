@@ -73,7 +73,6 @@ public class TableActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.table_menu, menu);
-
         return true;
     }
 
@@ -164,4 +163,13 @@ public class TableActivity extends AppCompatActivity {
             return new ArrayList<>(1);
         }
     }
+
+    private void initTableHeader(Student student){
+        student.getAssessment();
+        for (Assessment assessment: student.getAssessment()) {
+            assessment.getScore();
+        }
+    }
+
+
 }
