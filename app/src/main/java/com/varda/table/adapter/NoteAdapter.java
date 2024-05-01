@@ -63,7 +63,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                 viewModel.deleteNote(content);
                 return true;
             } else if (itemId == R.id.menu_copy) {
-                ClipboardUtil.copyToClipboard(context, content.getContent());
+                ClipboardUtil.copyToClipboard(context, content.getContent(), "Տեքստը պատճենվել է");
                 return true;
             }
             return false;

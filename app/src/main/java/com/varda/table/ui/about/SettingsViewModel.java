@@ -1,4 +1,4 @@
-package com.varda.table.ui.settings;
+package com.varda.table.ui.about;
 
 import androidx.lifecycle.ViewModel;
 

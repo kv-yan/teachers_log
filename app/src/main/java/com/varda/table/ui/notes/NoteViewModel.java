@@ -51,5 +51,7 @@ public class NoteViewModel extends ViewModel {
         databaseHelper.deleteNote(note);
         loadNotes();
     }
+
+
 }
 

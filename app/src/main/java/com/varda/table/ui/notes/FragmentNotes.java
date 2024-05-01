@@ -9,11 +9,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.varda.table.R;
 import com.varda.table.adapter.NoteAdapter;
 import com.varda.table.databinding.FragmentNotesBinding;
 import com.varda.table.factory.NoteViewModelFactory;
@@ -41,12 +43,14 @@ public class FragmentNotes extends Fragment {
 
         noteViewModel.getNotes().observe(getViewLifecycleOwner(), notes -> adapter.setNotes(notes));
 
-        // Handle add note button click
         binding.addNewNote.setOnClickListener(v -> {
             showAddNoteDialog();
         });
+
+        setActionBarTitle();
         return root;
     }
+
 
     @Override
     public void onDestroyView() {
@@ -71,6 +75,14 @@ public class FragmentNotes extends Fragment {
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
         builder.show();
+    }
+
+    private void setActionBarTitle() {
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.title_notes);
+        }
     }
 }
 

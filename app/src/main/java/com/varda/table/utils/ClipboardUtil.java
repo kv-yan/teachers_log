@@ -7,14 +7,13 @@ import android.widget.Toast;
 
 public class ClipboardUtil {
 
-    // Function to copy text to clipboard
-    public static void copyToClipboard(Context context, String text) {
+    public static void copyToClipboard(Context context, String text , String toastMsg) {
         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         
         ClipData clip = ClipData.newPlainText("Copied Text", text);
         
         clipboard.setPrimaryClip(clip);
 
-        Toast.makeText(context, "Տեքստը պատճենվել է", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
     }
 }

@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.varda.table.R;
 import com.varda.table.adapter.ClassesAdapter;
 import com.varda.table.databinding.FragmentClassesBinding;
 import com.varda.table.dialog.AddNewClassDialogHelper;
@@ -63,6 +66,8 @@ public class FragmentClasses extends Fragment {
 
         binding.rvClasses.setAdapter(classesAdapter);
         binding.rvClasses.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        setActionBarTitle();
         return root;
     }
 
@@ -70,6 +75,14 @@ public class FragmentClasses extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void setActionBarTitle(){
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.title_classes);
+        }
     }
 }
 

@@ -6,9 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.appcompat.app.ActionBar;
 
+import com.varda.table.R;
 import com.varda.table.databinding.FragmentClassListBinding;
 import com.varda.table.factory.ClassListViewModelFactory;
 import com.varda.table.ui.classList.view.ClassListView;
@@ -30,6 +33,7 @@ public class FragmentClassList extends Fragment {
         binding = FragmentClassListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+
         dayNamesList = Arrays.asList("Երկ", "Երք", "Չրք", "Հնգ", "Ուրբ", "Շբթ");
 
         classListViewModel.getClassList().observe(getViewLifecycleOwner(), item -> {
@@ -47,6 +51,8 @@ public class FragmentClassList extends Fragment {
                 binding.classListLayout.addView(viewItem);
             }
         });
+
+        setActionBarTitle();
         return root;
     }
 
@@ -61,6 +67,14 @@ public class FragmentClassList extends Fragment {
             return dayNamesList.get(dayId);
         } else {
             return "Error";
+        }
+    }
+
+    private void setActionBarTitle(){
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.title_class_list);
         }
     }
 }
