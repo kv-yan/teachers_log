@@ -32,6 +32,19 @@
         <item name="android:actionOverflowButtonStyle">@style/Widget.ActionButton.Overflow</item>
     </style>
 
+    <style name="Theme.TableWithActionBar.Splash" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <item name="colorPrimary">#21A9CB</item>
+        <item name="colorPrimaryVariant">#21A9CB</item>
+        <item name="colorOnPrimary">#21A9CB</item>
+
+        <item name="colorSecondary">#21A9CB</item>
+        <item name="colorSecondaryVariant">#21A9CB</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:statusBarColor">#21A9CB</item>
+        <item name="android:actionOverflowButtonStyle">@style/Widget.ActionButton.Overflow</item>
+    </style>
+
     <style name="Widget.ActionButton.Overflow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_add</item>
     </style>
