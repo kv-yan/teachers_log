@@ -1,5 +1,6 @@
 package com.varda.table.dialog;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class StudentScoreDialog extends Dialog {
+public class StudentScoreDialog extends AlertDialog {
     Student student;
     TextView textView;
     Context context;

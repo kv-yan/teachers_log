@@ -2,6 +2,7 @@ package com.varda.table.model;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Student {
     private String name;
@@ -10,15 +11,29 @@ public class Student {
     private String marks;
     private String parentsEmail;
 
-    public Student(String name, List<Assessment> assessment, String averageGrade, String marks, String parentsEmail) {
+    public Student(String name, List<Assessment> assessment, String marks, String parentsEmail) {
         this.name = name;
         this.assessment = assessment;
-        this.averageGrade = averageGrade;
         this.marks = marks;
         this.parentsEmail = parentsEmail;
+
+        float count = 0;
+        int validAssessmentCount = 0;
+        for (Assessment item : assessment) {
+            if (item.getScore().matches("\\d+")) {
+                count += Integer.parseInt(item.getScore());
+                validAssessmentCount++;
+            }
+        }
+
+        if (validAssessmentCount > 0) {
+            this.averageGrade = String.valueOf(count / validAssessmentCount);
+        } else {
+            this.averageGrade = "0";
+        }
     }
 
-    public Student(String name /*List<String> assessment, String averageGrade, String marks, String parentsEmail*/) {
+    public Student(String name) {
         this.name = name;
         this.assessment = Collections.emptyList();
         this.averageGrade = "";

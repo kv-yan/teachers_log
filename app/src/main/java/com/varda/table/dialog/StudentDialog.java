@@ -1,5 +1,6 @@
 package com.varda.table.dialog;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -8,7 +9,7 @@ import android.widget.TextView;
 import com.varda.table.R;
 import com.varda.table.model.Student;
 
-public class StudentDialog extends Dialog {
+public class StudentDialog extends AlertDialog {
     private final String studentName;
     private final int assessment;
     private final int missingCount;

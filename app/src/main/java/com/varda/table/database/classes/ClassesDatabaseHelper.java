@@ -5,16 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.varda.table.model.Assessment;
 import com.varda.table.model.Classes;
 import com.varda.table.model.Student;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ClassesDatabaseHelper extends SQLiteOpenHelper {
@@ -96,14 +95,39 @@ public class ClassesDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public List<Student> getStudentsListFromJson(String json) {
-       if (json.isEmpty()){
-           return new ArrayList<>();
-       }else {
-           Gson gson = new Gson();
-           Type studentListType = new TypeToken<List<Student>>(){}.getType();
-           return gson.fromJson(json, studentListType);
-       }
+        if (json.isEmpty()) {
+            return new ArrayList<>();
+        } else {
+            Gson gson = new Gson();
+            Type studentListType = new TypeToken<List<Student>>(){}.getType();
+            List<Student> students = gson.fromJson(json, studentListType);
+
+            for (Student student : students) {
+                float count = 0;
+                int assessmentCount = 0;
+                List<Assessment> assessments = student.getAssessment();
+                for (Assessment assessment : assessments) {
+                    if (!assessment.getScore().isEmpty() &&
+                            !assessment.getScore().equals("բ") &&
+                            !assessment.getScore().equals("հ/բ") &&
+                            !assessment.getScore().equals("ու")) {
+
+                            count += Integer.parseInt(assessment.getScore());
+                            assessmentCount++;
+
+                    }
+                }
+                if (assessmentCount > 0) {
+                    student.setAverageGrade(String.valueOf(count / assessmentCount));
+                } else {
+                    student.setAverageGrade("0");
+                }
+            }
+
+            return students;
+        }
     }
+
 
 
     public void updateClassContent(int id, List<Student> students) {

@@ -1,6 +1,5 @@
 package com.varda.table.activity.table;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +17,7 @@ import com.varda.table.databinding.ActivityTableBinding;
 import com.varda.table.dialog.AddNewDayDialogHelper;
 import com.varda.table.dialog.AddNewStudentDialogHelper;
 import com.varda.table.dialog.StudentDialog;
+import com.varda.table.dialog.StudentListDialog;
 import com.varda.table.factory.TableViewModelFactory;
 import com.varda.table.model.Assessment;
 import com.varda.table.model.Student;
@@ -26,12 +26,12 @@ import com.varda.table.utils.Constants;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TableActivity extends AppCompatActivity {
     TableViewModel tableViewModel;
 
     ActivityTableBinding binding;
-
 
 
     @Override
@@ -66,6 +66,12 @@ public class TableActivity extends AppCompatActivity {
         });
 
         binding.rvTable.setAdapter(adapter);
+
+        binding.excellentStudents.setOnClickListener(studentCategoryClick("Գերազանցիկ աշակերտներ", tableViewModel.excellentStudents));
+        binding.percussiveStudents.setOnClickListener(studentCategoryClick("Հարվածային աշակերտներ", tableViewModel.percussiveStudents));
+        binding.lazyStudents.setOnClickListener(studentCategoryClick("Ծույլ աշակերտներ", tableViewModel.lazyStudents));
+
+        initAverageGrade();
     }
 
 
@@ -92,13 +98,12 @@ public class TableActivity extends AppCompatActivity {
             AddNewStudentDialogHelper.showAddClassDialog(this, new AddNewStudentDialogHelper.DialogCallback() {
                 @Override
                 public void onSave(String name, String email) {
-                    Student newStudent = new Student(name, getAssessmentForNewStudent(), "", "", email);
+                    Student newStudent = new Student(name, getAssessmentForNewStudent(), "", email);
                     tableViewModel.addStudentToClass((int) tableViewModel.currentClassId, newStudent);
                     String updated = tableViewModel.getClassById((int) tableViewModel.currentClassId).getValue().getStudents();
                     adapter.setStudents(tableViewModel.getStudentListFromJson(updated));
                     updateView();
                 }
-
 
                 @Override
                 public void onCancel() {
@@ -114,6 +119,7 @@ public class TableActivity extends AppCompatActivity {
                     tableViewModel.addNewDay(inputText);
                     updateView();
                 }
+
                 @Override
                 public void onCancel() {
 
@@ -146,6 +152,7 @@ public class TableActivity extends AppCompatActivity {
             }
         });
         binding.rvTable.setAdapter(adapter);
+        initAverageGrade();
     }
 
     private List<Assessment> getAssessmentForNewStudent() {
@@ -164,12 +171,47 @@ public class TableActivity extends AppCompatActivity {
         }
     }
 
-    private void initTableHeader(Student student){
+    private void initTableHeader(Student student) {
         student.getAssessment();
-        for (Assessment assessment: student.getAssessment()) {
+        for (Assessment assessment : student.getAssessment()) {
             assessment.getScore();
         }
     }
 
+    private View.OnClickListener studentCategoryClick(String studentsCategories, List<Student> students) {
+        return view -> new StudentListDialog(TableActivity.this, students, studentsCategories).show();
+    }
+
+    private void initAverageGrade() {
+        AtomicInteger excellentCount = new AtomicInteger(0);
+        AtomicInteger percussiveCount = new AtomicInteger(0);
+        AtomicInteger lazyCount = new AtomicInteger(0);
+
+        tableViewModel.currentClass.observe(this, classes -> {
+            List<Student> students = tableViewModel.getStudentListFromJson(classes.getStudents());
+
+            for (Student student : students) {
+                if (!student.getAverageGrade().isEmpty()) {
+                    float averageGrade = Float.parseFloat(student.getAverageGrade());
+                    if (averageGrade <= 5) {
+                        lazyCount.getAndIncrement();
+                        tableViewModel.lazyStudents.add(student);
+                    } else if (averageGrade <= 8.5) {
+                        percussiveCount.getAndIncrement();
+                        tableViewModel.percussiveStudents.add(student);
+                    } else {
+                        excellentCount.getAndIncrement();
+                        tableViewModel.excellentStudents.add(student);
+                    }
+                }
+            }
+
+            runOnUiThread(() -> {
+                binding.excellentStudents.setText("Գերազանցիկ աշակերտների քանակը՝ " + excellentCount.get());
+                binding.percussiveStudents.setText("Հարվածային աշակերտների քանակը՝ " + percussiveCount.get());
+                binding.lazyStudents.setText("Ծույլ աշակերտների քանակը՝ " + lazyCount.get());
+            });
+        });
+    }
 
 }
