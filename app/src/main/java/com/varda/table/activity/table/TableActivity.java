@@ -5,6 +5,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,10 +19,12 @@ import com.varda.table.dialog.AddNewDayDialogHelper;
 import com.varda.table.dialog.AddNewStudentDialogHelper;
 import com.varda.table.dialog.StudentDialog;
 import com.varda.table.dialog.StudentListDialog;
+import com.varda.table.dialog.StudentMissingListDialog;
 import com.varda.table.factory.TableViewModelFactory;
 import com.varda.table.model.Assessment;
 import com.varda.table.model.Student;
 import com.varda.table.utils.Constants;
+import com.varda.table.view.DayItemView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,8 +73,11 @@ public class TableActivity extends AppCompatActivity {
         binding.excellentStudents.setOnClickListener(studentCategoryClick("Գերազանցիկ աշակերտներ", tableViewModel.excellentStudents));
         binding.percussiveStudents.setOnClickListener(studentCategoryClick("Հարվածային աշակերտներ", tableViewModel.percussiveStudents));
         binding.lazyStudents.setOnClickListener(studentCategoryClick("Ծույլ աշակերտներ", tableViewModel.lazyStudents));
+        binding.missingStudents.setOnClickListener(studentMissingClick("Բացականեր", tableViewModel.missedStudents));
 
+        initTableHeader();
         initAverageGrade();
+        getMissedStudents();
     }
 
 
@@ -171,22 +177,38 @@ public class TableActivity extends AppCompatActivity {
         }
     }
 
-    private void initTableHeader(Student student) {
-        student.getAssessment();
-        for (Assessment assessment : student.getAssessment()) {
-            assessment.getScore();
-        }
+    private void initTableHeader() {
+        tableViewModel.currentClass.observe(this, classes -> {
+            binding.tableHeader.daysLayout.removeAllViews();
+            try {
+                List<Assessment> assessments = tableViewModel.getStudentListFromJson(classes.getStudents()).get(0).getAssessment();
+                for (Assessment assessment : assessments) {
+                    DayItemView dayItemView = new DayItemView(this, assessment);
+                    binding.tableHeader.daysLayout.addView(dayItemView);
+                }
+            } catch (IndexOutOfBoundsException exception) {
+                Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private View.OnClickListener studentCategoryClick(String studentsCategories, List<Student> students) {
         return view -> new StudentListDialog(TableActivity.this, students, studentsCategories).show();
     }
 
+    private View.OnClickListener studentMissingClick(String studentsCategories, List<Student> students) {
+        return view -> new StudentMissingListDialog(TableActivity.this, students, studentsCategories).show();
+    }
+
     private void initAverageGrade() {
+        tableViewModel.excellentStudents.clear();
+        tableViewModel.percussiveStudents.clear();
+        tableViewModel.lazyStudents.clear();
+
+
         AtomicInteger excellentCount = new AtomicInteger(0);
         AtomicInteger percussiveCount = new AtomicInteger(0);
         AtomicInteger lazyCount = new AtomicInteger(0);
-
         tableViewModel.currentClass.observe(this, classes -> {
             List<Student> students = tableViewModel.getStudentListFromJson(classes.getStudents());
 
@@ -214,4 +236,17 @@ public class TableActivity extends AppCompatActivity {
         });
     }
 
+    private void getMissedStudents() {
+        tableViewModel.currentClass.observe(this, classes -> {
+            for (Student student : tableViewModel.getStudentListFromJson(classes.getStudents())) {
+                for (Assessment item : student.getAssessment()) {
+                    if (item.getScore().contains("բ") || item.getScore().contains("հ/բ")) {
+                        if (!tableViewModel.missedStudents.contains(student)) {
+                            tableViewModel.missedStudents.add(student);
+                        }
+                    }
+                }
+            }
+        });
+    }
 }

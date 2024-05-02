@@ -39,9 +39,7 @@ public class DayItemView extends LinearLayout {
     private void init(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.day_item, this, true);
         daytextView = findViewById(R.id.day_text_view);
-        daytextView.setText(assessment.dayOf);
-        daytextView.setRotation(-90);
-
+        daytextView.setText(assessment.getDayOf());
     }
 
     public void setAssessment(String assessment) {

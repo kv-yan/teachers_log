@@ -38,9 +38,9 @@ public class StudentDialog extends AlertDialog {
         TextView emailTextView = findViewById(R.id.student_parents_email);
 
         nameTextView.setText(studentName);
-        assessmentTextView.setText("Միջին գնահատական` \n   " + assessment);
-        missingCountTextView.setText("Բացակաների քանակ` \n    " + missingCount);
+        assessmentTextView.setText("Միջին գնահատական` " + assessment);
+        missingCountTextView.setText("Բացակաների քանակ` " + missingCount);
         notesTextView.setText(notes);
-        emailTextView.setText("Ծնողի էլ հասցեն` \n    " + parentsEmail);
+        emailTextView.setText("Ծնողի էլ հասցեն` " + parentsEmail);
     }
 }

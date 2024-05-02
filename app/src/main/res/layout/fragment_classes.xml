@@ -15,15 +15,15 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"/>
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_new_class"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#21A9CB"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
+        android:backgroundTint="#21A9CB"
         android:clickable="true"
         android:src="@drawable/ic_add_class"
         app:layout_constraintBottom_toBottomOf="parent"

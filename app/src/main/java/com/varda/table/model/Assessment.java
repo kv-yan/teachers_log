@@ -7,8 +7,8 @@ public class Assessment {
         this.score = score;
     }
 
-    public String dayOf;
-    public String score;
+    private String dayOf;
+    private String score;
 
     public String getDayOf() {
         return dayOf;

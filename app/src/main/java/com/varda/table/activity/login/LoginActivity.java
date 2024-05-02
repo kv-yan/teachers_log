@@ -26,14 +26,12 @@ public class LoginActivity extends AppCompatActivity {
         if (helper.getAuthStatus()) {
             startActivity(mainFlow);
         }
-        String info = "Info\nEmail '" + helper.getEmail() + "'\nPass '" + helper.getPassword() + "'";
-
+        
         binding.btnLogin.setOnClickListener(view -> {
             helper.setAuthStatus(true);
             helper.setEmail(binding.textEmail.getText().toString());
             helper.setPassword(binding.textPass.getText().toString());
             startActivity(mainFlow);
         });
-        binding.status.setText(info);
     }
 }

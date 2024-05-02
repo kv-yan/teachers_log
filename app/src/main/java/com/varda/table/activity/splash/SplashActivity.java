@@ -26,6 +26,7 @@ public class SplashActivity extends AppCompatActivity {
             mainFlow.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(mainFlow);
             finish();
-        }, 3000);
+        }, 1000);
+        // TODO: 5/1/2024 change to 3000
     }
 }

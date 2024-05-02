@@ -41,7 +41,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Student student = students.get(position);
-        holder.bind(student ,position+1, viewModel);
+        holder.bind(student, position + 1, viewModel);
         holder.itemView.setOnLongClickListener(studentItemClick.onLongClick(student));
     }
 
@@ -58,7 +58,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView studentName;
         LinearLayout assessmentLinerLayout;
-        EditText studentAverageGrade;
+        TextView studentAverageGrade;
         EditText studentMarks;
         EditText studentParentsEmail;
 
@@ -72,7 +72,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         }
 
         public void bind(Student student, int position, TableViewModel viewModel) {
-            studentName.setText(position +". " + student.getName());
+            studentName.setText(position + ". " + student.getName());
             studentAverageGrade.setText(student.getAverageGrade());
             studentMarks.setText(student.getMarks());
             studentParentsEmail.setText(student.getParentsEmail());

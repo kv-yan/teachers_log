@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
     android:background="@drawable/table_item_border"
     android:padding="4dp">
 
@@ -11,6 +11,8 @@
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:text="Անուն Ազգանուն"
+        android:textSize="16sp"
+        app:layout_constraintVertical_bias="0.9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,12 +21,13 @@
         android:id="@+id/border_1"
         android:layout_width="2dp"
         android:layout_height="0dp"
+        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/student_name"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/student_assessment"
+        android:id="@+id/days_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
@@ -40,15 +43,17 @@
         android:layout_marginStart="7dp"
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/student_assessment"
+        app:layout_constraintStart_toEndOf="@id/days_layout"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/student_average_grade"
         style="@style/table_edit_text"
-        android:layout_width="70dp"
-        android:rotation="-90"
+        android:layout_width="100dp"
+        android:rotation="90"
         android:text="Միջին գնահատական"
+        android:singleLine="true"
+        android:layout_marginStart="-32.5dp"
         android:layout_height="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/border_2"
@@ -58,24 +63,25 @@
         android:id="@+id/border_3"
         android:layout_width="2dp"
         android:layout_height="0dp"
-        android:layout_marginStart="7dp"
+        android:layout_marginStart="-25dp"
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/student_average_grade"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/student_marks"
-        style="@style/table_edit_text"
         android:layout_width="150dp"
-        android:layout_height="0dp"
-        android:gravity="center_vertical|start"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="bottom"
         android:padding="3dp"
         android:singleLine="true"
-        android:textSize="8sp"
+        android:text="Նշումներ"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/border_3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
 
     <View
         android:id="@+id/border_4"
@@ -87,11 +93,14 @@
         app:layout_constraintStart_toEndOf="@id/student_marks"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/student_parents_email"
-        style="@style/table_edit_text"
+        android:textSize="16sp"
         android:layout_width="200dp"
-        android:layout_height="0dp"
+        android:text="Ծնողի էլ․ հասցե"
+        app:layout_constraintVertical_bias="0.9"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/border_4"
         app:layout_constraintTop_toTopOf="parent" />
