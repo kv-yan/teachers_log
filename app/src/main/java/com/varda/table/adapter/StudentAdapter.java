@@ -60,7 +60,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         LinearLayout assessmentLinerLayout;
         TextView studentAverageGrade;
         EditText studentMarks;
-        EditText studentParentsEmail;
+        TextView studentParentsEmail;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -54,7 +54,8 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
             Transport.send(mimeMessage);
         } catch (MessagingException e) {
             e.printStackTrace();
-            Toast.makeText(context, "Նամակը չուղարկվեց", Toast.LENGTH_SHORT).show();
+            Log.e("VARDANYAN", "doInBackground: \"Նամակը չուղարկվեց\" " );
+            Log.e("VARDANYAN", "exception :: "+e.getMessage() );
         }
 
         return null;

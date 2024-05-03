@@ -1,7 +1,6 @@
 package com.varda.table.dialog;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,12 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.varda.table.R;
 import com.varda.table.activity.table.TableViewModel;
 import com.varda.table.adapter.ScoreAdapter;
+import com.varda.table.callback.StudentScoreClick;
+import com.varda.table.helper.mail.MailHelper;
 import com.varda.table.model.Assessment;
 import com.varda.table.model.Student;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class StudentScoreDialog extends AlertDialog {
     Student student;
@@ -53,17 +53,40 @@ public class StudentScoreDialog extends AlertDialog {
         ScoreAdapter adapter = getScoreAdapter();
         scoreRecyclerView.setAdapter(adapter);
 
-        adapter.setActionClick(clickedScore -> (View.OnClickListener) view -> {
-            textView.setText(clickedScore);
+        adapter.setActionClick(new StudentScoreClick() {
+            @Override
+            public View.OnClickListener onScoreClick(Student student, String clickedScore) {
+                return new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        textView.setText(clickedScore);
+                        int missedCount = 0;
+                        for (Assessment assessments : student.getAssessment()) {
+                            if (assessments.getDayOf() == assessment.getDayOf()) {
+                                assessments.setScore(clickedScore);
+                                if (clickedScore == "բ" || clickedScore == "հ/բ") {
+                                    missedCount += 1;
+                                }
+                            }
+                        }
 
-            for (Assessment assessments: student.getAssessment()){
-                if (assessments.getDayOf() == assessment.getDayOf()){
-                    assessments.setScore(clickedScore);
-                }
+
+                        if (clickedScore.contains("բ")) {
+                            String msgContent = "Հարգելի " + student.getName() + "ի ծնող, ուզում ենք տեղեկացնել, որ ձեր երեխան ստացել է բացակա " + assessment.getDayOf() + "-ին և ունի " + missedCount + " բացակայություն " + student.getLastAssessment().getDayOf() + "-ի դրությամբ\n\n" + "Հարգանքներով ClassNote";
+                            MailHelper.send(context, student.getParentsEmail(), "Երեխայի բացակայություններ", msgContent);
+                            Log.e("Vardanyan", "onClicked " + clickedScore + "text :: " + msgContent);
+                        }
+                        if (clickedScore == "1" || clickedScore == "2" || clickedScore == "3" || clickedScore == "4") {
+                            String msgContent = "Հարգելի " + student.getName() + "ի ծնող, ուզում ենք տեղեկացնել, որ ձեր երեխան ստացել է անբավարար գնահատական " + assessment.getDayOf() + " ին։\n\n" + "Հարգանքներով ClassNote";
+                            MailHelper.send(context, student.getParentsEmail(), "Երեխայի բացակայություններ", msgContent);
+
+                            Log.e("Vardanyan", "onClicked " + clickedScore + "text :: " + msgContent);
+                        }
+                        viewModel.saveAssessment(student);
+                        StudentScoreDialog.this.cancel();
+                    }
+                };
             }
-
-            viewModel.saveAssessment(student);
-            StudentScoreDialog.this.cancel();
         });
     }
 

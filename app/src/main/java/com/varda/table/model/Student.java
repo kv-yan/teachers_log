@@ -82,7 +82,13 @@ public class Student {
         this.assessment = assessment;
     }
 
-
+    public Assessment getLastAssessment() {
+        if (assessment != null && !assessment.isEmpty()) {
+            return assessment.get(assessment.size() - 1);
+        } else {
+            return null;
+        }
+    }
     public String getAverageGrade() {
         return averageGrade;
     }

@@ -6,5 +6,5 @@ import android.widget.EditText;
 import com.varda.table.model.Student;
 
 public interface StudentScoreClick {
-    public View.OnClickListener onScoreClick(/*Student student,*/ String clickedScore);
+    public View.OnClickListener onScoreClick(Student student, String clickedScore);
 }

@@ -86,10 +86,11 @@
         app:layout_constraintStart_toEndOf="@id/student_marks"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/student_parents_email"
         style="@style/table_edit_text"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
+        android:text="vardanyankaren924@gmail.co"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/border_4"

@@ -39,7 +39,7 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String score = scoreList.get(position);
         holder.noteContent.setText(score);
-        holder.itemView.setOnClickListener(onClickListener.onScoreClick(score));
+        holder.itemView.setOnClickListener(onClickListener.onScoreClick(student,score));
     }
 
 
