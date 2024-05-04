@@ -73,18 +73,18 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     private void showEditNoteDialog(Note content) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Edit Note");
+        builder.setTitle("Խմբագրել");
 
         final EditText input = new EditText(context);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setText(content.getContent());
         builder.setView(input);
 
-        builder.setPositiveButton("Save", (dialog, which) -> {
+        builder.setPositiveButton("Պահպանել", (dialog, which) -> {
             content.setContent(input.getText().toString());
             viewModel.updateNote(content);
         });
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        builder.setNegativeButton("Չեղարկել", (dialog, which) -> dialog.cancel());
 
         builder.show();
     }

@@ -1,6 +1,7 @@
 package com.varda.table.activity.table;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -187,7 +188,7 @@ public class TableActivity extends AppCompatActivity {
                     binding.tableHeader.daysLayout.addView(dayItemView);
                 }
             } catch (IndexOutOfBoundsException exception) {
-                Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+                Log.e("TABLE", "initTableHeader: ");
             }
         });
     }

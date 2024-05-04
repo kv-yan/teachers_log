@@ -24,11 +24,11 @@ public class AddNewStudentDialogHelper {
         EditText editTextStudent_name = dialogView.findViewById(R.id.student_name);
         EditText editTextParents_email = dialogView.findViewById(R.id.parents_email);
 
-        builder.setView(dialogView).setTitle("Add Student").setPositiveButton("Ավելացնել", (dialog, which) -> {
+        builder.setView(dialogView).setTitle("Ավելացնել աշակերտ").setPositiveButton("Ավելացնել", (dialog, which) -> {
             String studentName = editTextStudent_name.getText().toString();
             String patentEmail = editTextParents_email.getText().toString();
             callback.onSave(studentName, patentEmail);
-        }).setNegativeButton("Cancel", (dialog, which) -> callback.onCancel());
+        }).setNegativeButton("Չեղարկել", (dialog, which) -> callback.onCancel());
         builder.create().show();
     }
 }

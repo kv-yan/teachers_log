@@ -72,11 +72,18 @@ public class StudentScoreDialog extends AlertDialog {
 
 
                         if (clickedScore.contains("բ")) {
-                            String msgContent = "Հարգելի " + student.getName() + "ի ծնող, ուզում ենք տեղեկացնել, որ ձեր երեխան ստացել է բացակա " + assessment.getDayOf() + "-ին և ունի " + missedCount + " բացակայություն " + student.getLastAssessment().getDayOf() + "-ի դրությամբ\n\n" + "Հարգանքներով ClassNote";
-                            MailHelper.send(context, student.getParentsEmail(), "Երեխայի բացակայություններ", msgContent);
-                            Log.e("Vardanyan", "onClicked " + clickedScore + "text :: " + msgContent);
+                            StringBuilder msgContentBuilder = new StringBuilder();
+                            student.calculateMidAssessment();
+                            msgContentBuilder.append("Հարգելի ").append(student.getName()).append("ի ծնող, ուզում ենք տեղեկացնել, որ ձեր երեխան ստացել է բացակա ").append(assessment.getDayOf()).append("-ին և ունի ").append(missedCount).append(" բացակայություն ").append(student.getLastAssessment().getDayOf()).append("-ի դրությամբ:\nԵրեխայի միջին գնահատականն է` ").append(student.getAverageGrade()).append("\nՀարգանքներով ClassNote");
+
+                            MailHelper.send(context, student.getParentsEmail(), "Երեխայի բացակայություններ", msgContentBuilder.toString());
+                            Log.e("Vardanyan", "onClicked " + clickedScore + "text :: " + msgContentBuilder);
+
                         }
                         if (clickedScore == "1" || clickedScore == "2" || clickedScore == "3" || clickedScore == "4") {
+
+                            student.getAverageGrade();
+                            student.calculateMidAssessment();
                             String msgContent = "Հարգելի " + student.getName() + "ի ծնող, ուզում ենք տեղեկացնել, որ ձեր երեխան ստացել է անբավարար գնահատական " + assessment.getDayOf() + " ին։\n\n" + "Հարգանքներով ClassNote";
                             MailHelper.send(context, student.getParentsEmail(), "Երեխայի բացակայություններ", msgContent);
 

@@ -1,5 +1,6 @@
 package com.varda.table.model;
 
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class Student {
         return assessment;
     }
 
+
     public int calculateMidAssessment() {
         double total = 0;
         if (assessment != null && !assessment.isEmpty()) {
@@ -61,11 +63,19 @@ public class Student {
                     total += Double.parseDouble(str.getScore());
                 }
             }
-            return (int) (total / assessment.size());
+            double average = total / assessment.size();
+
+            // Format the average to have only one digit after the decimal point
+            DecimalFormat df = new DecimalFormat("#.#");
+            this.averageGrade = df.format(average);
+
+            // Return the integer part of the formatted average
+            return (int) average;
         } else {
             return 0;
         }
     }
+
 
     public int getMissedCount() {
         int total = 0;

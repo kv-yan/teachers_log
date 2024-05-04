@@ -12,5 +12,5 @@
         android:ems="10"
         android:inputType="text|textAutoComplete"
         android:singleLine="true"
-        android:hint="Enter class name" />
+        android:hint="Դասարանի անուն" />
 </LinearLayout>

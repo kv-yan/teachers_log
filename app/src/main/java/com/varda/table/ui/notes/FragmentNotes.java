@@ -60,19 +60,20 @@ public class FragmentNotes extends Fragment {
 
     private void showAddNoteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Add Note");
+        builder.setTitle("Ավելացնել նշում");
 
         final EditText input = new EditText(requireContext());
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint("Նշում");
         builder.setView(input);
 
-        builder.setPositiveButton("Add", (dialog, which) -> {
+        builder.setPositiveButton("Պահպանել", (dialog, which) -> {
             String noteContent = input.getText().toString();
             if (!noteContent.isEmpty()) {
                 noteViewModel.addNote(noteContent);
             }
         });
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        builder.setNegativeButton("Չեղարկել", (dialog, which) -> dialog.cancel());
 
         builder.show();
     }

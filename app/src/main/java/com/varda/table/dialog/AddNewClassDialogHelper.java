@@ -27,10 +27,10 @@ public class AddNewClassDialogHelper {
         LayoutInflater inflater = LayoutInflater.from(context);
         View dialogView = inflater.inflate(R.layout.dialog_add_class, null);
         EditText editTextClassName = dialogView.findViewById(R.id.edit_text_class_name);
-        builder.setView(dialogView).setTitle("Add Class").setPositiveButton("Save", (dialog, which) -> {
+        builder.setView(dialogView).setTitle("Ավելացնել դասարան").setPositiveButton("Պահպանել", (dialog, which) -> {
             String className = editTextClassName.getText().toString();
             callback.onSave(className);
-        }).setNegativeButton("Cancel", (dialog, which) -> callback.onCancel());
+        }).setNegativeButton("Չեղարկել", (dialog, which) -> callback.onCancel());
         builder.create().show();
     }
 }

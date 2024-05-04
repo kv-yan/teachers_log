@@ -28,7 +28,7 @@
         <activity
             android:name=".activity.login.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.TableWithActionBar" />
+            android:theme="@style/Theme.TableWithActionBar.Splash" />
         <activity
             android:name=".activity.table.TableActivity"
             android:exported="true"

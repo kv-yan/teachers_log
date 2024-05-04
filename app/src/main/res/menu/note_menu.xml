@@ -1,11 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_edit"
-        android:title="Update"/>
+        android:title="Խմբագրել"/>
     <item
         android:id="@+id/menu_copy"
-        android:title="Copy"/>
+        android:title="Պատճենել"/>
     <item
         android:id="@+id/menu_delete"
-        android:title="Delete"/>
+        android:title="Ջնջել"/>
 </menu>
