@@ -91,11 +91,11 @@ public class ClassListView extends LinearLayout {
         this.viewModel = viewModel;
     }
 
-    private void updateWeekData() {
+    /*private void updateWeekData() {
         String dayOfWeek = dayNameEditText.getText().toString();
         List<String> times = getTimes();
         viewModel.saveDayData(dayId, dayOfWeek, times);
-    }
+    }*/
 
     private List<String> getTimes() {
         List<String> times = new ArrayList<>();
@@ -112,13 +112,13 @@ public class ClassListView extends LinearLayout {
     }
 
     public void setTimes(List<String> times) {
-        timeEditTexts0.setText(times.get(0));
-        timeEditTexts1.setText(times.get(1));
-        timeEditTexts2.setText(times.get(2));
-        timeEditTexts3.setText(times.get(3));
-        timeEditTexts4.setText(times.get(4));
-        timeEditTexts5.setText(times.get(5));
-        timeEditTexts6.setText(times.get(6));
+        timeEditTexts0.setText(addNumbers(times.get(0), 1));
+        timeEditTexts1.setText(addNumbers(times.get(1), 2));
+        timeEditTexts2.setText(addNumbers(times.get(2), 3));
+        timeEditTexts3.setText(addNumbers(times.get(3), 4));
+        timeEditTexts4.setText(addNumbers(times.get(4), 5));
+        timeEditTexts5.setText(addNumbers(times.get(5), 6));
+        timeEditTexts6.setText(addNumbers(times.get(6), 7));
 
         timeEditTexts0.addTextChangedListener(createTextWatcher());
         timeEditTexts1.addTextChangedListener(createTextWatcher());
@@ -140,6 +140,34 @@ public class ClassListView extends LinearLayout {
 
     public void setDayName(String dayName) {
         dayNameEditText.setText(dayName);
+    }
+
+
+
+    private String addNumbers(String text, int number) {
+        return number + ". " + text;
+    }
+
+    private void updateWeekData() {
+        List<String> times = new ArrayList<>();
+        times.add(stripNumber(timeEditTexts0.getText().toString()));
+        times.add(stripNumber(timeEditTexts1.getText().toString()));
+        times.add(stripNumber(timeEditTexts2.getText().toString()));
+        times.add(stripNumber(timeEditTexts3.getText().toString()));
+        times.add(stripNumber(timeEditTexts4.getText().toString()));
+        times.add(stripNumber(timeEditTexts5.getText().toString()));
+        times.add(stripNumber(timeEditTexts6.getText().toString()));
+
+        String dayOfWeek = dayNameEditText.getText().toString();
+        viewModel.saveDayData(dayId, dayOfWeek, times);
+    }
+
+    private String stripNumber(String text) {
+        String[] parts = text.split("\\.", 2);
+        if (parts.length > 1) {
+            return parts[1].trim();
+        }
+        return text;
     }
 }
 

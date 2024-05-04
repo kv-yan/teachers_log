@@ -2,7 +2,6 @@ package com.varda.table.model;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class Student {
     private String name;
@@ -58,7 +57,9 @@ public class Student {
         double total = 0;
         if (assessment != null && !assessment.isEmpty()) {
             for (Assessment str : assessment) {
-                total += Double.parseDouble(str.getScore());
+                if (!str.getScore().isEmpty() && !str.getScore().contains("բ") && !str.getScore().contains("ու")) {
+                    total += Double.parseDouble(str.getScore());
+                }
             }
             return (int) (total / assessment.size());
         } else {
@@ -89,6 +90,7 @@ public class Student {
             return null;
         }
     }
+
     public String getAverageGrade() {
         return averageGrade;
     }

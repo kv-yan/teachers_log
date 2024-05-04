@@ -1,13 +1,14 @@
 package com.varda.table.dialog;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.varda.table.R;
 import com.varda.table.model.Student;
+import com.varda.table.utils.ClipboardUtil;
 
 public class StudentDialog extends AlertDialog {
     private final String studentName;
@@ -20,7 +21,7 @@ public class StudentDialog extends AlertDialog {
         super(context);
         this.studentName = student.getName();
 
-        this.assessment = student.calculateMidAssessment() ;
+        this.assessment = student.calculateMidAssessment();
         this.missingCount = student.getMissedCount();
         this.notes = student.getMarks();
         this.parentsEmail = student.getParentsEmail();
@@ -40,7 +41,19 @@ public class StudentDialog extends AlertDialog {
         nameTextView.setText(studentName);
         assessmentTextView.setText("Միջին գնահատական` " + assessment);
         missingCountTextView.setText("Բացակաների քանակ` " + missingCount);
-        notesTextView.setText(notes);
-        emailTextView.setText("Ծնողի էլ հասցեն` " + parentsEmail);
+        if (notes.isEmpty()) {
+            notesTextView.setText("Նշունմեր չկան");
+        } else {
+            notesTextView.setText("Նշում՝ " + notes);
+        }
+
+        emailTextView.setText("Ծնողի էլ հասցեն` \n" + parentsEmail);
+        emailTextView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                ClipboardUtil.copyToClipboard(getContext(), parentsEmail, "Էլ հասցեն պատճենվել է");
+                return false;
+            }
+        });
     }
 }

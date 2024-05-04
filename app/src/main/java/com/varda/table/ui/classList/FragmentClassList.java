@@ -37,6 +37,7 @@ public class FragmentClassList extends Fragment {
         dayNamesList = Arrays.asList("Երկ", "Երք", "Չրք", "Հնգ", "Ուրբ", "Շբթ");
 
         classListViewModel.getClassList().observe(getViewLifecycleOwner(), item -> {
+            binding.classListLayout.removeAllViews();
             for (int i = 0; i < item.size(); i++) {
                 List<String> items = item.get(i);
                 ClassListView viewItem = new ClassListView(getContext());
