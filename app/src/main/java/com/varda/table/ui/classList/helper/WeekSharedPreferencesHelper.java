@@ -28,6 +28,8 @@ public class WeekSharedPreferencesHelper {
         for (int i = 0; i < times.size(); i++) {
             editor.putString("day_" + dayId + "_time_" + (i+1), times.get(i));
         }
+        // Save the 8th element
+        editor.putString("day_" + dayId + "_time_8", times.get(7));
         editor.apply();
     }
 
@@ -37,7 +39,7 @@ public class WeekSharedPreferencesHelper {
 
     public List<String> getTimes(int dayId) {
         List<String> times = new ArrayList<>();
-        for (int i = 1; i <= 7; i++) {
+        for (int i = 1; i <= 8; i++) {
             String time = sharedPreferences.getString("day_" + dayId + "_time_" + i, "");
             times.add(time);
         }

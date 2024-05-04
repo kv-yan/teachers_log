@@ -1,68 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:elevation="3dp"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/day_name"
-        android:layout_width="match_parent"
-        android:textSize="22sp"
-        android:layout_height="wrap_content"/>
-
-    <EditText
-        android:id="@+id/time_1"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:minWidth="150dp" />
+        android:layout_marginBottom="16dp"
+        android:elevation="3dp"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/time_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:minWidth="150dp" />
+        <TextView
+            android:id="@+id/day_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/time_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:minWidth="150dp" />
+        <EditText
+            android:id="@+id/time_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:inputType="text"
+            android:minWidth="150dp"
+            app:layout_constraintEnd_toStartOf="@id/time_1_end_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/day_name" />
 
-    <EditText
-        android:id="@+id/time_4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:minWidth="150dp" />
+        <EditText
+            android:id="@+id/time_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:inputType="text"
+            android:minWidth="150dp"
+            app:layout_constraintEnd_toStartOf="@id/time_1_end_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_1" />
 
-    <EditText
-        android:id="@+id/time_5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:minWidth="150dp" />
+        <EditText
+            android:id="@+id/time_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:inputType="text"
+            android:minWidth="150dp"
+            app:layout_constraintEnd_toStartOf="@id/time_1_end_time"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_2" />
 
-    <EditText
-        android:id="@+id/time_6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:minWidth="150dp" />
+        <EditText
+            android:id="@+id/time_4"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:layout_marginEnd="16dp"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toStartOf="@id/time_1_end_time"
+            android:minWidth="150dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_3" />
 
-    <EditText
-        android:id="@+id/time_7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:minWidth="150dp" />
+        <EditText
+            android:id="@+id/time_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:inputType="text"
+            android:minWidth="150dp"
+            app:layout_constraintEnd_toStartOf="@id/time_1_end_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_4" />
 
-    <EditText
-        android:id="@+id/time_8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:minWidth="150dp" />
-</LinearLayout>
+        <EditText
+            android:id="@+id/time_6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:inputType="text"
+            android:minWidth="150dp"
+            app:layout_constraintEnd_toStartOf="@id/time_1_end_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_5" />
+
+        <EditText
+            android:id="@+id/time_7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:inputType="text"
+            android:minWidth="150dp"
+            app:layout_constraintEnd_toStartOf="@id/time_1_end_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_6" />
+
+        <EditText
+            android:id="@+id/time_8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:inputType="text"
+            android:minWidth="150dp"
+            app:layout_constraintEnd_toStartOf="@id/time_1_end_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_7" />
+
+        <TextView
+            android:id="@+id/time_1_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:minWidth="80dp"
+            android:text="(09:00-09:45)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/time_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/time_1" />
+
+        <TextView
+            android:id="@+id/time_2_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="(09:00-09:45)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:minWidth="80dp"
+            app:layout_constraintBottom_toBottomOf="@+id/time_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/time_2" />
+
+        <TextView
+            android:id="@+id/time_3_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="(09:00-09:45)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:minWidth="80dp"
+            app:layout_constraintBottom_toBottomOf="@+id/time_3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/time_3" />
+
+        <TextView
+            android:id="@+id/time_4_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="(09:00-09:45)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:minWidth="80dp"
+            app:layout_constraintBottom_toBottomOf="@+id/time_4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/time_4" />
+
+        <TextView
+            android:id="@+id/time_5_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:minWidth="80dp"
+            android:text="(09:00-09:45)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/time_5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/time_5" />
+
+        <TextView
+            android:id="@+id/time_6_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:minWidth="80dp"
+            android:text="(09:00-09:45)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/time_6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/time_6" />
+
+
+        <TextView
+            android:id="@+id/time_7_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="11dp"
+            android:inputType="text"
+            android:minWidth="80dp"
+            android:text="(09:00-09:45)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/time_7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/time_7" />
+
+        <TextView
+            android:id="@+id/time_8_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:minWidth="80dp"
+            android:text="(09:00-09:45)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/time_8" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
