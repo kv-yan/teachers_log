@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -48,28 +47,7 @@ public class TableActivity extends AppCompatActivity {
         tableViewModel = new ViewModelProvider(this, factory).get(TableViewModel.class);
 
         binding.rvTable.setLayoutManager(new LinearLayoutManager(this));
-
-        int clickedIndex = getIntent().getIntExtra(Constants.CLICKED_CLASSES_ITEM, 0);
-        StudentAdapter adapter = new StudentAdapter(Collections.emptyList(), tableViewModel, new StudentItemClick() {
-            @Override
-            public View.OnLongClickListener onLongClick(Student student) {
-                return view -> {
-                    StudentDialog studentDialog = new StudentDialog(TableActivity.this, student);
-                    studentDialog.show();
-                    return false;
-                };
-            }
-        });
-
-        tableViewModel.getClassById(clickedIndex).observe(this, classes -> {
-            getSupportActionBar().setTitle(classes.getClassName());
-            List<Student> students = tableViewModel.getStudentListFromJson(classes.getStudents());
-            if (students != null) {
-                adapter.setStudents(students);
-            }
-        });
-
-        binding.rvTable.setAdapter(adapter);
+        onDrawView();
 
         binding.excellentStudents.setOnClickListener(studentCategoryClick("Գերազանցիկ աշակերտներ", tableViewModel.excellentStudents));
         binding.percussiveStudents.setOnClickListener(studentCategoryClick("Հարվածային աշակերտներ", tableViewModel.percussiveStudents));
@@ -80,7 +58,6 @@ public class TableActivity extends AppCompatActivity {
         initAverageGrade();
         getMissedStudents();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,7 +86,7 @@ public class TableActivity extends AppCompatActivity {
                     tableViewModel.addStudentToClass((int) tableViewModel.currentClassId, newStudent);
                     String updated = tableViewModel.getClassById((int) tableViewModel.currentClassId).getValue().getStudents();
                     adapter.setStudents(tableViewModel.getStudentListFromJson(updated));
-                    updateView();
+                    onDrawView();
                 }
 
                 @Override
@@ -124,7 +101,7 @@ public class TableActivity extends AppCompatActivity {
                 @Override
                 public void onSave(String inputText) {
                     tableViewModel.addNewDay(inputText);
-                    updateView();
+                    onDrawView();
                 }
 
                 @Override
@@ -139,8 +116,9 @@ public class TableActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateView() {
+    private void onDrawView() {
         int clickedIndex = getIntent().getIntExtra(Constants.CLICKED_CLASSES_ITEM, 0);
+        tableViewModel.getClassById(clickedIndex);
         StudentAdapter adapter = new StudentAdapter(Collections.emptyList(), tableViewModel, new StudentItemClick() {
             @Override
             public View.OnLongClickListener onLongClick(Student student) {
@@ -152,7 +130,7 @@ public class TableActivity extends AppCompatActivity {
             }
         });
 
-        tableViewModel.getClassById(clickedIndex).observe(this, classes -> {
+        tableViewModel.currentClass.observe(this, classes -> {
             List<Student> students = tableViewModel.getStudentListFromJson(classes.getStudents());
             if (students != null) {
                 adapter.setStudents(students);
@@ -202,15 +180,16 @@ public class TableActivity extends AppCompatActivity {
     }
 
     private void initAverageGrade() {
-        tableViewModel.excellentStudents.clear();
-        tableViewModel.percussiveStudents.clear();
-        tableViewModel.lazyStudents.clear();
 
 
-        AtomicInteger excellentCount = new AtomicInteger(0);
-        AtomicInteger percussiveCount = new AtomicInteger(0);
-        AtomicInteger lazyCount = new AtomicInteger(0);
+
         tableViewModel.currentClass.observe(this, classes -> {
+            AtomicInteger excellentCount = new AtomicInteger(0);
+            AtomicInteger percussiveCount = new AtomicInteger(0);
+            AtomicInteger lazyCount = new AtomicInteger(0);
+            tableViewModel.excellentStudents.clear();
+            tableViewModel.percussiveStudents.clear();
+            tableViewModel.lazyStudents.clear();
             List<Student> students = tableViewModel.getStudentListFromJson(classes.getStudents());
 
             for (Student student : students) {
@@ -229,16 +208,15 @@ public class TableActivity extends AppCompatActivity {
                 }
             }
 
-            runOnUiThread(() -> {
                 binding.excellentStudents.setText("Գերազանցիկ աշակերտների քանակը՝ " + excellentCount.get());
                 binding.percussiveStudents.setText("Հարվածային աշակերտների քանակը՝ " + percussiveCount.get());
                 binding.lazyStudents.setText("Ծույլ աշակերտների քանակը՝ " + lazyCount.get());
-            });
         });
     }
 
     private void getMissedStudents() {
         tableViewModel.currentClass.observe(this, classes -> {
+            tableViewModel.missedStudents.clear();
             for (Student student : tableViewModel.getStudentListFromJson(classes.getStudents())) {
                 for (Assessment item : student.getAssessment()) {
                     if (item.getScore().contains("բ") || item.getScore().contains("հ/բ")) {

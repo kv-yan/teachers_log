@@ -35,9 +35,10 @@ public class TableViewModel extends AndroidViewModel {
     public LiveData<Classes> getClassById(int id) {
         MutableLiveData<Classes> classesLiveData = new MutableLiveData<>();
         Classes classes = databaseHelper.getClass(id);
-        currentClass.setValue(classes);
         classesLiveData.setValue(classes);
         currentClassId = classes.getId();
+
+        currentClass.setValue(classes);
         return classesLiveData;
     }
 
@@ -59,6 +60,7 @@ public class TableViewModel extends AndroidViewModel {
         }
 
         databaseHelper.updateClassContent(currentClassId, studentList);
+        getClassById(currentClassId);
     }
 
     public void addNewDay(String dayOf) {
