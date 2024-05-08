@@ -53,47 +53,39 @@ public class StudentScoreDialog extends AlertDialog {
         ScoreAdapter adapter = getScoreAdapter();
         scoreRecyclerView.setAdapter(adapter);
 
-        adapter.setActionClick(new StudentScoreClick() {
-            @Override
-            public View.OnClickListener onScoreClick(Student student, String clickedScore) {
-                return new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        textView.setText(clickedScore);
-                        int missedCount = 0;
-                        for (Assessment assessments : student.getAssessment()) {
-                            if (assessments.getDayOf() == assessment.getDayOf()) {
-                                assessments.setScore(clickedScore);
-                                if (clickedScore == "բ" || clickedScore == "հ/բ") {
-                                    missedCount += 1;
-                                }
-                            }
-                        }
-
-
-                        if (clickedScore.contains("բ")) {
-                            StringBuilder msgContentBuilder = new StringBuilder();
-                            student.calculateMidAssessment();
-                            msgContentBuilder.append("Հարգելի ").append(student.getName()).append("ի ծնող, ուզում ենք տեղեկացնել, որ ձեր երեխան ստացել է բացակա ").append(assessment.getDayOf()).append("-ին և ունի ").append(missedCount).append(" բացակայություն ").append(student.getLastAssessment().getDayOf()).append("-ի դրությամբ:\nԵրեխայի միջին գնահատականն է` ").append(student.getAverageGrade()).append("\nՀարգանքներով ClassNote");
-
-                            MailHelper.send(context, student.getParentsEmail(), "Երեխայի բացակայություններ", msgContentBuilder.toString());
-                            Log.e("Vardanyan", "onClicked " + clickedScore + "text :: " + msgContentBuilder);
-
-                        }
-                        if (clickedScore == "1" || clickedScore == "2" || clickedScore == "3" || clickedScore == "4") {
-
-                            student.getAverageGrade();
-                            student.calculateMidAssessment();
-                            String msgContent = "Հարգելի " + student.getName() + "ի ծնող, ուզում ենք տեղեկացնել, որ ձեր երեխան ստացել է անբավարար գնահատական " + assessment.getDayOf() + " ին։\n\n" + "Հարգանքներով ClassNote";
-                            MailHelper.send(context, student.getParentsEmail(), "Երեխայի բացակայություններ", msgContent);
-
-                            Log.e("Vardanyan", "onClicked " + clickedScore + "text :: " + msgContent);
-                        }
-                        viewModel.saveAssessment(student);
-                        StudentScoreDialog.this.cancel();
+        adapter.setActionClick((student, clickedScore) -> view -> {
+            textView.setText(clickedScore);
+            int missedCount = 0;
+            for (Assessment assessments : student.getAssessment()) {
+                if (assessments.getDayOf() == assessment.getDayOf()) {
+                    assessments.setScore(clickedScore);
+                    if (clickedScore == "բ" || clickedScore == "հ/բ") {
+                        missedCount += 1;
                     }
-                };
+                }
             }
+
+
+            if (clickedScore.contains("բ")) {
+                StringBuilder msgContentBuilder = new StringBuilder();
+                student.calculateMidAssessment();
+                msgContentBuilder.append("Հարգելի ").append(student.getName()).append("ի ծնող, ուզում ենք տեղեկացնել, որ ձեր երեխան ստացել է բացակա ").append(assessment.getDayOf()).append("-ին և ունի ").append(missedCount).append(" բացակայություն ").append(student.getLastAssessment().getDayOf()).append("-ի դրությամբ:\nԵրեխայի միջին գնահատականն է` ").append(student.getAverageGrade()).append("\nՀարգանքներով ClassNote");
+
+                MailHelper.send(context, student.getParentsEmail(), "Երեխայի բացակայություններ", msgContentBuilder.toString());
+                Log.e("Vardanyan", "onClicked " + clickedScore + "text :: " + msgContentBuilder);
+            }
+            if (clickedScore == "1" || clickedScore == "2" || clickedScore == "3" || clickedScore == "4") {
+
+                student.getAverageGrade();
+                student.calculateMidAssessment();
+                String msgContent = "Հարգելի " + student.getName() + "ի ծնող, ուզում ենք տեղեկացնել, որ ձեր երեխան ստացել է անբավարար գնահատական " + assessment.getDayOf() + " ին։\n\n" + "Հարգանքներով ClassNote";
+                MailHelper.send(context, student.getParentsEmail(), "Երեխայի բացակայություններ", msgContent);
+
+                Log.e("Vardanyan", "onClicked " + clickedScore + "text :: " + msgContent);
+            }
+
+            viewModel.saveAssessment(student);
+            StudentScoreDialog.this.cancel();
         });
     }
 

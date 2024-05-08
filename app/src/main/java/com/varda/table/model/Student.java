@@ -57,20 +57,25 @@ public class Student {
 
     public int calculateMidAssessment() {
         double total = 0;
+        int assessmentCount = 0;
         if (assessment != null && !assessment.isEmpty()) {
             for (Assessment str : assessment) {
                 if (!str.getScore().isEmpty() && !str.getScore().contains("բ") && !str.getScore().contains("ու")) {
                     total += Double.parseDouble(str.getScore());
+                    assessmentCount++;
                 }
             }
-            double average = total / assessment.size();
 
-            // Format the average to have only one digit after the decimal point
-            DecimalFormat df = new DecimalFormat("#.#");
-            this.averageGrade = df.format(average);
+            if (assessmentCount > 0) {
+                double average = total / assessmentCount;
 
-            // Return the integer part of the formatted average
-            return (int) average;
+                DecimalFormat df = new DecimalFormat("#.#");
+                this.averageGrade = df.format(average);
+
+                return (int) average;
+            } else {
+                return 0;
+            }
         } else {
             return 0;
         }
