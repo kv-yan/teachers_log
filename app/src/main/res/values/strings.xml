@@ -5,11 +5,18 @@
     <string name="title_notes">Նշումներ</string>
     <string name="title_about">Մեր մասին</string>
     <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="log_in">Log in</string>
+    <string name="password">Գաղտնաբառ</string>
+    <string name="log_in">Մւտք գործել</string>
+    <string name="registration">Գրանցվել</string>
 
     <string name="add_student">Աշակերտ</string>
     <string name="add_new_day">Նոր օր</string>
     <string name="about_text">ClassNote ծրագիրը սեղծված է ուսուցիչների և դասավանդողների աշխատանքը հեշտացնելու և ավելի պրոդուկտիվ դարձնելու համար։\n\nԱյստեղ դուք կարող եք սեղծել դասարաններ, անել ամենօրա գնահատում, տեսնել յուրաքանչյուր աշակերտի միջին գնահատականը, բացակաների քանակը, ամբողջ դասարանի վիճակագրությունը տրվյալ պահի դրությամբ և այլն։\n\nԾրագիրը ուժեղ կողմերից մեկը հետևյալն է՝ աշակերտի բացակայության կամ անբավարար գնահատականի դեպքում համակարգը ավտոմատ կերպով  ծնողի էլեկտրոնային հասցեին կուղարկի համապատասխան գրությամբ հաղորդագրություն։\n\nԱյստեղ դուք կարող եք նաև պահպանել ձեր դասացուցակը և ժամատախտակը։\n\nClassNote ծրագրի առավելություններից է նշումների հատվածը։ Այստեղ ուսուցիչը կարող է պահպանել անհրաժեշտ նշումները, լինկերը և այլն։\n\nԱյսպիսով, ClassNote-ը ամենօրյա նշումնների տետրի նորարարական և խելացի տարբերակն է։\n\nՄենք պարբերաբար թարմացվում ենք և բաց ենք նոր առաջարկների և բողոքների համար։</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login">LoginActivity_</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>
