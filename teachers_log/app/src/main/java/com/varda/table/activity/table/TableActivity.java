@@ -50,15 +50,15 @@ public class TableActivity extends AppCompatActivity {
         onDrawView();
 
         binding.excellentStudents.setOnClickListener(studentCategoryClick("Գերազանցիկ աշակերտներ", tableViewModel.excellentStudents));
-        binding.percussiveStudents.setOnClickListener(studentCategoryClick("Հարվածային աշակերտներ", tableViewModel.percussiveStudents));
-        binding.lazyStudents.setOnClickListener(studentCategoryClick("Ծույլ աշակերտներ", tableViewModel.lazyStudents));
+        binding.goodStudents.setOnClickListener(studentCategoryClick("Լավ առաջադիմությամբ աշակերտներ", tableViewModel.goodStudents));
+        binding.percussiveStudents.setOnClickListener(studentCategoryClick("Բավարար առաջադիմությամբ աշակերտներ", tableViewModel.percussiveStudents));
+        binding.lazyStudents.setOnClickListener(studentCategoryClick("Անբավարար առաջադիմությամբ աշակերտներ", tableViewModel.lazyStudents));
         binding.missingStudents.setOnClickListener(studentMissingClick("Բացականեր", tableViewModel.missedStudents));
 
         initTableHeader();
         initAverageGrade();
         getMissedStudents();
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -180,27 +180,31 @@ public class TableActivity extends AppCompatActivity {
     }
 
     private void initAverageGrade() {
-
-
-
         tableViewModel.currentClass.observe(this, classes -> {
             AtomicInteger excellentCount = new AtomicInteger(0);
+            AtomicInteger goodCount = new AtomicInteger(0);
             AtomicInteger percussiveCount = new AtomicInteger(0);
             AtomicInteger lazyCount = new AtomicInteger(0);
+
             tableViewModel.excellentStudents.clear();
+            tableViewModel.goodStudents.clear();
             tableViewModel.percussiveStudents.clear();
             tableViewModel.lazyStudents.clear();
+
             List<Student> students = tableViewModel.getStudentListFromJson(classes.getStudents());
 
             for (Student student : students) {
                 if (!student.getAverageGrade().isEmpty()) {
                     float averageGrade = Float.parseFloat(student.getAverageGrade());
-                    if (averageGrade <= 5) {
+                    if (averageGrade <= 3) {
                         lazyCount.getAndIncrement();
                         tableViewModel.lazyStudents.add(student);
-                    } else if (averageGrade <= 8.5) {
+                    } else if (averageGrade <= 6) {
                         percussiveCount.getAndIncrement();
                         tableViewModel.percussiveStudents.add(student);
+                    } else if (averageGrade <= 8) {
+                        goodCount.getAndIncrement();
+                        tableViewModel.goodStudents.add(student);
                     } else {
                         excellentCount.getAndIncrement();
                         tableViewModel.excellentStudents.add(student);
@@ -208,11 +212,13 @@ public class TableActivity extends AppCompatActivity {
                 }
             }
 
-                binding.excellentStudents.setText("Գերազանցիկ աշակերտների քանակը՝ " + excellentCount.get());
-                binding.percussiveStudents.setText("Հարվածային աշակերտների քանակը՝ " + percussiveCount.get());
-                binding.lazyStudents.setText("Ծույլ աշակերտների քանակը՝ " + lazyCount.get());
+            binding.excellentStudents.setText("Գերազանցիկ աշակերտների քանակը՝ " + excellentCount.get());
+            binding.goodStudents.setText("Լավ առաջադիմությամբ աշակերտների քանակը՝ " + goodCount.get());
+            binding.percussiveStudents.setText("Բավարար առաջադիմությամբ աշակերտների քանակը՝ " + percussiveCount.get());
+            binding.lazyStudents.setText("Անբավարար առաջադիմությամբ աշակերտների քանակը՝ " + lazyCount.get());
         });
     }
+
 
     private void getMissedStudents() {
         tableViewModel.currentClass.observe(this, classes -> {

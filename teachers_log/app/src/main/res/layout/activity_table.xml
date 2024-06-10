@@ -41,15 +41,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="Գերազանցիկ աշակերտների քան :"
+                android:text="գերազանց առաջադիմությամբ աշակերտներ "
                 android:textSize="15sp" />
 
+            <TextView
+                android:id="@+id/good_students"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="լավ առաջադիմությամբ աշակերտներ"
+                android:textSize="15sp" />
             <TextView
                 android:id="@+id/percussive_students"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Հարվածային աշակերտների քան:"
+                android:text="բավարար առաջադիմությամբ աշակերտներ"
                 android:textSize="15sp" />
 
             <TextView
@@ -57,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Ծույլ աշակերտների քան:"
+                android:text="անբավարար առաջադիմությամբ աշակերտներ"
                 android:textSize="15sp" />
 
             <TextView

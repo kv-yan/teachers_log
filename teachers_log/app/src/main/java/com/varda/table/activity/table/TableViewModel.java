@@ -21,6 +21,7 @@ public class TableViewModel extends AndroidViewModel {
     public int currentClassId;
     public MutableLiveData<Classes> currentClass = new MutableLiveData<>();
     public List<Student> excellentStudents = new ArrayList<>();
+    public List<Student> goodStudents = new ArrayList<>();
     public List<Student> percussiveStudents = new ArrayList<>();
     public List<Student> lazyStudents = new ArrayList<>();
     public List<Student> missedStudents = new ArrayList<>();
