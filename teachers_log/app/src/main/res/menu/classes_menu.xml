@@ -1,0 +1,12 @@
+<!-- popup_menu.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_open"
+        android:title="Բացել"/>
+    <item
+        android:id="@+id/menu_edit"
+        android:title="Խմբագրել"/>
+    <item
+        android:id="@+id/menu_delete"
+        android:title="Ջնջել"/>
+</menu>
